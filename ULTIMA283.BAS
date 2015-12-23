@@ -983,11 +983,11 @@ CLOSE #1
 809 PRINT "press 1 and enter for true count conversion ";: INPUT true%
 PRINT "input a constant added to render the bet count ";: INPUT constant
 PRINT " "
-PRINT "press 1 and enter to use ongoing simulation results"
-PRINT "to generate an ezcount strategy ";: INPUT ezc%
+PRINT "press 1 and enter to use ongoing simulation results "
+PRINT "to converge upon an optimal-card-counting strategy (ezcount)";: INPUT ezc%
 PRINT " "
 PRINT "Press 1 and enter to mathematically balance"
-PRINT "the card counting strategy if unbalanced ";: INPUT bal%
+PRINT "the card-counting strategy if unbalanced ";: INPUT bal%
 PRINT " "
 IF bal% = 1 THEN
     PRINT "Press 1 and enter or 2 and enter to specify the type of balancing to be used. "
@@ -1026,8 +1026,10 @@ END IF
 OPEN v$ FOR APPEND AS #1
 PRINT #1, "press 1 and enter for true count conversion ";: PRINT #1, true%
 PRINT #1, "input a constant added to render the bet count ";: PRINT #1, constant
-PRINT #1, "press 1 and enter to use ongoing simulation results to generate an ezcount strategy ";: PRINT #1, ezc%
-PRINT #1, "Press 1 and enter to mathematically balance count strategy if unbalanced ";: PRINT #1, bal%
+PRINT #1, "press 1 and enter to use ongoing simulation results "
+PRINT #1, "to converge upon an optimal-card-counting strategy (ezcount)";: PRINT #1, ezc%
+PRINT #1, "Press 1 and enter to mathematically balance"
+PRINT #1, "card-counting strategy if unbalanced ";: PRINT #1, bal%
 IF bal% = 1 THEN
     PRINT #1, "Press 1 and enter, or 2 and enter to specify the type of balancing to be used: "
     PRINT #1, "1 for subtractive, 2 for multiplicative ": PRINT #1, balance%
