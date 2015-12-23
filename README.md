@@ -1,11 +1,12 @@
 # SourceCode
-In this repository, I disclose the source code for a set of software applications. 
-The set of software applications are written in a basic programming known as QB64.
-The following are instructions on how to use the set of software applications.
+In this repository, I disclose the source code for a set of software applications. I wrote the set of software
+applications in a basic programming language known as QB64. In this README.md file, I do the following. Describe 
+the hardware and software required to use the set of software applications. Recommend a procedure for aquiring and 
+using the QB64 complier to assemble the source code into object code. 
 
 Hardware and Software Required to Use the Various Software Applications
 
-To use each of the various software applications, users will need a general-purpose computer capableof executing software
+To use each of the various software applications, users will need a general-purpose computer capable of executing software
 instructions including a hard drive, a motherboard with a central processing unit, at least one gigabyte of RAM, a
 monitor, a keyboard, and a mouse. Users must format the hard drive of the general-purpose computer using an operating
 system selected from a group consisting of the Microsoft Windows operating system and the Mac OS X operating
