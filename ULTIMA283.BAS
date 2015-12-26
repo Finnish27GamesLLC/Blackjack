@@ -1280,6 +1280,7 @@ PRINT #1, "finish purse ";: PRINT #1, USING "########.#"; purse + (b(39) - b(40)
 PRINT #1, " low ";: PRINT #1, USING "########.#"; b(43);: PRINT #1, "  largest drop ";: PRINT #1, USING "########.#"; drop
 PRINT #1, "change in purse is an average of ";: PRINT #1, USING "##########.##"; b(31);: PRINT #1, " credits after "; scr&; " rounds"
 PRINT #1, "one standard deviation equal to  ";: PRINT #1, USING "##########.##"; SQR(b(33) / INT(rn&& / scr&));: PRINT #1, " credits"
+PRINT #1, " "
 IF ezc% <> 1 THEN
     PRINT #1, "values added to the running count as each ";
     PRINT #1, "card of a given denomination was played"
