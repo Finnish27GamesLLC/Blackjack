@@ -1,0 +1,81 @@
+enter folder/filename prefix to be used to store
+application output
+U283docs/17h17s6dgame3A
+ 
+enter the folder/filename prefix of a set of files containing data
+about the user-defined set of game rules and matching-strategy tables
+for a game of blackjack
+17h17s6d/game3
+ 
+strategy loaded is described as follows: 17h17s6d/game3                                                                  
+if this is acceptable type 'y' and press enter 
+y
+press 'y' and enter to load an ezcount strategy 
+press 1 and enter for default count values  1 
+what is the count value of A's (-1 )
+what is the count value of 2's ( 1 )
+what is the count value of 3's ( 1 )
+what is the count value of 4's ( 1 )
+what is the count value of 5's ( 1 )
+what is the count value of 6's ( 1 )
+what is the count value of 7's ( 0 )
+what is the count value of 8's ( 0 )
+what is the count value of 9's ( 0 )
+what is the count value of T's (-1 )
+what is the count value of J's (-1 )
+what is the count value of Q's (-1 )
+what is the count value of K's (-1 )
+press 1 and enter for true count conversion  1 
+input a constant added to render the bet count  0 
+press 1 and enter to use ongoing simulation results 
+to converge upon an optimal-card-counting strategy (ezcount) 1 
+Press 1 and enter to mathematically balance 
+the card-counting strategy if unbalanced  1 
+Press 1 and enter, or 2 and enter to specify the type of balancing to be used: 
+1 for subtractive, 2 for multiplicative 
+ 2 
+ 
+press 1 and enter to generate the ezcount strategy by only using
+ongoing simulation results gathered from the outcome of games started
+within a user-defined range of bet counts  0 
+ 
+ 
+ 25 % is the maximum percentage of the stack remaining in the shoe
+when the dealer reshuffles.
+ 
+if this is acceptable type 'y'and press enter y
+ 
+press 1 and enter for if the bet count falls below a user-defined threshold
+then the computer-controlled player quits the table  0 
+ 
+press 1 and enter for if the bet count rises above a user-defined threshold
+then the dealer reshuffles 0 
+ 
+input as a number of credits the table minimum  1 
+input as a number of credits the table maximum  1 
+input as a number of credits the fee paid for every 100 credits bet  0 
+input as a number of credits the starting purse  0 
+compute bets in multiples of what number of credits  1 
+press 1 and enter for a multiplicative betting system  0 
+press 1 and enter for an exponential betting system  0 
+press 1 and enter to limit bet size by percentage of purse  0 
+press 1 and enter to limit bets by number of credits 0 
+press 1 and enter for a plateau betting system  0 
+press 1 and enter for a proportional betting system  0 
+ 
+specify one of three insurance-side-bet strategies.
+ 
+press enter for the player never makes an insurance-side bet.
+press 1 and enter for the player makes an insurance-side bet
+whenever the bet count indicates doing so would be profitable.
+press 2 and enter for the player always makes an insurance-side bet.
+ 0 
+ 
+input the number of additional players at the table (0-6) 0 
+input the number of sessions in this simulation  100 
+input the number of rounds of play in each session  10000000 
+
+
+START: 12-22-2015 18:09:13
+
+END:   12-22-2015 20:20:48
