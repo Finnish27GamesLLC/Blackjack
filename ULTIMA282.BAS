@@ -1052,6 +1052,7 @@ FOR k = 9 TO 0 STEP -1
             account# = account# + df(10)
             PRINT #1, USING "####"; dc1 + 1;
             FOR y = 0 TO 5
+                IF y = 5 THEN y = 11
                 PRINT #1, USING "####.###"; df(y) / (df(10) + 1E-08) * 100;
             NEXT y: PRINT #1, " "
             PRINT #1, "total hands accounted for are ";: PRINT #1, USING "###.###"; account# * 100;: PRINT #1, "% of all possible"
