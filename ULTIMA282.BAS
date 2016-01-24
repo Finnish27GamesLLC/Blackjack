@@ -1,4 +1,4 @@
-'ULTIMA282.BAS is a software application that enables the user to 
+'ULTIMA282.BAS is a software application that enables the user to
 'program their computer to conduct abbreviated-combinatorial analyses
 'of card games belonging to the Blackjack family of table-card games.
 
@@ -88,9 +88,9 @@ DIM database AS xbase: DIM num AS bs: DIM g(32) AS INTEGER: DIM h(32) AS INTEGER
 DIM sd AS bsrules: DIM hit(54, 9): DIM sar(54, 9) AS INTEGER: DIM dd(3 TO 7) AS INTEGER: DIM prob(54, 9)
 DIM far(54, 9) AS INTEGER: DIM br(54, 9) AS INTEGER: DIM dmult(8) AS INTEGER: DIM pdenom(12) AS INTEGER
 DIM dadd(8) AS INTEGER: DIM dp(8): DIM duc(10): DIM f(29, 24): DIM card(22) AS INTEGER: DIM aq(54, 9, 32)
-DIM pfar(54, 9, 32, 24): DIM dfar(54, 9, 11): DIM psar(54, 9, 32, 24): DIM dsar(54, 9, 11): DIM dbr(54, 9, 11): DIM pbr(54, 9, 32, 24)
-DIM mc(21): DIM df(11): DIM mv(5) AS INTEGER: DIM puc(54): DIM mc21po(11) AS SINGLE
-DIM pc1 AS INTEGER: DIM pc2 AS INTEGER: DIM dc1 AS INTEGER
+DIM pfar(54, 9, 32, 24): DIM dfar(54, 9, 12): DIM psar(54, 9, 32, 24): DIM dsar(54, 9, 12): DIM dbr(54, 9, 12): DIM pbr(54, 9, 32, 24)
+DIM mc(21): DIM df(12): DIM mv(5) AS INTEGER: DIM puc(54): DIM mc21po(11) AS SINGLE: DIM pshc(7, 2) AS DOUBLE
+DIM pc1 AS INTEGER: DIM pc2 AS INTEGER: DIM dc1 AS INTEGER: DIM x(5) AS DOUBLE: DIM y(5) AS DOUBLE
 GOTO 226
 777 dmult(2) = pc1 * pc2: dadd(2) = pc1 + pc2: dp(2) = 1
 IF bjsh% = 1 THEN IF dadd(2) = 19 THEN f(I, 17) = f(I, 17) + dp(2): GOTO 18
@@ -317,7 +317,10 @@ FOR r = 0 TO 9 STEP 1
     IF mc(r) < 1 THEN mc(13) = mc(r) ELSE mc(13) = 1
     IF mc(r) = 0 THEN GOTO 28 ELSE dp(2) = mc(r) / mc(10): mc(r) = mc(r) - mc(13): mc(10) = mc(10) - mc(13)
     IF dadd(2) > 14 THEN mv(1) = dadd(2) - 15: df(mv(1)) = df(mv(1)) + dp(2): mc(r) = mc(r) + mc(13): mc(10) = mc(10) + mc(13): GOTO 28
-    IF dmult(2) = 0 AND dadd(2) > j - 1 THEN mv(1) = dadd(2) - 5: df(mv(1)) = df(mv(1)) + dp(2): mc(r) = mc(r) + mc(13): mc(10) = mc(10) + mc(13): GOTO 28
+    IF dmult(2) = 0 AND dadd(2) > j - 1 THEN
+        IF dadd(2) <> 9 THEN mv(1) = dadd(2) - 5: df(mv(1)) = df(mv(1)) + dp(2): mc(r) = mc(r) + mc(13): mc(10) = mc(10) + mc(13): GOTO 28
+        IF dadd(2) = 9 THEN df(10) = df(10) + dp(2): mc(r) = mc(r) + mc(13): mc(10) = mc(10) + mc(13): GOTO 28
+    END IF
     FOR s = 0 TO 9 STEP 1
         dmult(3) = dmult(2) * s: dadd(3) = dadd(2) + s
         IF mc(s) < 1 THEN mc(14) = mc(s) ELSE mc(14) = 1
@@ -368,24 +371,10 @@ FOR r = 0 TO 9 STEP 1
     29 NEXT s
     mc(r) = mc(r) + mc(13): mc(10) = mc(10) + mc(13)
 28 NEXT r
-FOR y = 0 TO 9
-df(10) = df(10) + df(y): NEXT y
+FOR y = 0 TO 10
+df(11) = df(11) + df(y): NEXT y
 FOR y = 1 TO 5
-df(11) = df(11) + df(4 + y): NEXT y
-IF push% <> 1 THEN
-    IF dc1 = 0 THEN df(4) = df(4) - mc(9) / mc(10)
-    FOR x = 0 TO 11
-        IF x = 10 THEN x = 11
-        IF dc1 = 0 THEN df(x) = df(x) / (1 - mc(9) / mc(10))
-    NEXT x
-END IF
-IF ten% <> 1 THEN
-    IF dc1 = 9 THEN df(4) = df(4) - mc(0) / mc(10)
-    FOR x = 0 TO 11
-        IF x = 10 THEN x = 11
-        IF dc1 = 9 THEN df(x) = df(x) / (1 - mc(0) / mc(10))
-    NEXT x
-END IF
+df(12) = df(12) + df(4 + y): NEXT y
 RETURN
 888 IF pc1 <= pc2 THEN n = pc1 / 2 * (19 - pc1) + pc2 ELSE n = pc2 / 2 * (19 - pc2) + pc1
 x = 0
@@ -403,6 +392,8 @@ FOR v = 12 TO 19
             IF mc21po(5) = 0 THEN f(x, 9) = f(x, 9) + f(x, 21): f(x, 21) = 0
             IF mc21po(6) = 0 THEN f(x, 9) = f(x, 9) + f(x, 22): f(x, 22) = 0
             IF mc21po(7) = 0 THEN f(x, 9) = f(x, 9) + f(x, 23): f(x, 23) = 0
+            IF dc1 = 0 AND push% = 1 THEN df(4) = df(4) + df(10): df(10) = 0
+            IF dc1 = 9 AND ten% = 1 THEN df(4) = df(4) + df(10): df(10) = 0
             FOR y = 0 TO 16
                 IF y > 9 THEN
                     FOR z = 0 TO 4
@@ -422,7 +413,7 @@ FOR v = 12 TO 19
                 END IF
                 IF y < 10 THEN
                     FOR z = 0 TO 5
-                        IF z = 5 THEN q = q + f(x, y) * df(11)
+                        IF z = 5 THEN q = q + f(x, y) * df(12)
                         IF z < 5 THEN IF z < y - 5 THEN q = q + f(x, y) * df(z)
                         IF z < 5 THEN IF z > y - 5 THEN q = q - f(x, y) * df(z)
                         IF z < 4 THEN IF z = y - 5 THEN IF dwt% = 1 THEN q = q - f(x, y) * df(z)
@@ -435,8 +426,7 @@ FOR v = 12 TO 19
             NEXT y
             q = q + f(x, 17) * blackjack + f(x, 18) * (po777 + 1) + f(x, 19) * (po678 + 1) + f(x, 20) * (mc21po(4) + 1) + f(x, 21) * (mc21po(5) + 1) + f(x, 22) * (mc21po(6) + 1) + f(x, 23) * (mc21po(7) + 1) + f(x, 24)
             IF split% <> 1 THEN
-                IF dc1 = 0 AND push% <> 1 THEN q = q * (1 - mc9 / mc10) - mc9 / mc10
-                IF dc1 = 9 AND ten% <> 1 THEN q = q * (1 - mc0 / mc10) - mc0 / mc10
+                q = q - df(10)
                 aq(n, dc1, x) = q
                 IF q > hit(n, dc1) THEN hit(n, dc1) = q: br(n, dc1) = x
             END IF
@@ -490,7 +480,7 @@ FOR y = 0 TO 17
     END IF
     IF y < 10 THEN
         FOR z = 0 TO 5
-            IF z = 5 THEN q = q + f(0, y) * df(11)
+            IF z = 5 THEN q = q + f(0, y) * df(12)
             IF z < 5 THEN IF z < y - 5 THEN q = q + f(0, y) * df(z)
             IF z < 5 THEN IF z > y - 5 THEN q = q - f(0, y) * df(z)
             IF z < 4 THEN IF z = y - 5 THEN IF dwt% = 1 THEN q = q - f(0, y) * df(z)
@@ -501,19 +491,20 @@ FOR y = 0 TO 17
         NEXT z
     END IF
 NEXT y
-IF (hole% <> 1 AND split% = 1) THEN q = 2 * q
 IF split% <> 1 THEN
-    IF hole% <> 1 THEN q = 2 * q
-    IF dc1 = 0 THEN IF push% <> 1 THEN q = (q * (1 - mc9 / mc10) - mc9 / mc10) * (1 + hole%) ELSE IF hole% = 1 THEN q = 2 * q
-    IF dc1 = 9 THEN IF ten% <> 1 THEN q = (q * (1 - mc0 / mc10) - mc0 / mc10) * (1 + hole%) ELSE IF hole% = 1 THEN q = 2 * q
-    IF dc1 <> 0 AND dc1 <> 9 THEN IF hole% = 1 THEN q = 2 * q
+    IF hole% <> 1 THEN q = 2 * q - df(10)
+    IF hole% = 1 THEN q = 2 * (q - df(10))
     aq(n, dc1, 32) = q
     IF q > hit(n, dc1) THEN hit(n, dc1) = q: br(n, dc1) = 32
     ddown = q: REM PRINT "double down strategy yields a win minus loss expectation of"; : PRINT USING "##.####"; q
 END IF
-IF split% = 1 THEN IF pc1 > pc2 THEN IF q * prob > splithands(pc2, dc1) THEN splithands(pc2, dc1) = q * prob: far(n, dc1) = 32
-IF split% = 1 THEN IF pc2 = pc1 THEN IF q * prob > splithands(pc2, dc1) THEN splithands(pc2, dc1) = q * prob: far(n, dc1) = 32: sar(n, dc1) = 32
-IF split% = 1 THEN IF pc2 > pc1 THEN IF q * prob > splithands(pc2, dc1) THEN splithands(pc2, dc1) = q * prob: sar(n, dc1) = 32
+IF split% = 1 THEN
+    IF hole% <> 1 THEN q = 2 * q
+    IF hole% = 1 THEN q = 2 * (q - df(10))
+    IF pc1 > pc2 THEN IF q * prob > splithands(pc2, dc1) THEN splithands(pc2, dc1) = q * prob: far(n, dc1) = 32
+    IF pc2 = pc1 THEN IF q * prob > splithands(pc2, dc1) THEN splithands(pc2, dc1) = q * prob: far(n, dc1) = 32: sar(n, dc1) = 32
+    IF pc2 > pc1 THEN IF q * prob > splithands(pc2, dc1) THEN splithands(pc2, dc1) = q * prob: sar(n, dc1) = 32
+END IF
 RETURN
 234 IF (split% <> 1 AND ls% = 1) THEN
     q = -.5
@@ -524,6 +515,96 @@ RETURN
     IF early% <> 1 THEN srndr = q: REM PRINT "L surrender strategy yields a win minus loss expectation of"; : PRINT USING "##.####"; q
     IF early% = 1 THEN srndr = q: REM PRINT "E surrender strategy yields a win minus loss expectation of"; : PRINT USING "##.####"; q
 END IF
+RETURN
+1111 ERASE pshc
+REM calculates average number of post-split-hands and average number of pairs
+REM that occur after the player finishes splitting pairs in a game wherein;
+REM the rules allow the player to split to a maximum of two post-split hands.
+FOR x = 0 TO 1
+    x(x) = mc(pc1) - x
+NEXT x
+FOR y = 0 TO 1
+    y(y) = mc(10) - y
+NEXT y
+pshc(1, 0) = (1 - x(0) / y(0)) * (1 - x(0) / y(1))
+pshc(1, 1) = 2 * pshc(1, 0)
+pshc(2, 0) = (1 - x(0) / y(0)) * x(0) / y(1)
+pshc(2, 1) = 2 * pshc(2, 0)
+pshc(2, 2) = pshc(2, 0) * .5
+pshc(3, 0) = x(0) / y(0) * x(1) / y(1)
+pshc(3, 1) = 2 * pshc(3, 0)
+pshc(3, 2) = pshc(3, 0)
+FOR z = 1 TO 3
+    pshc(0, 1) = pshc(0, 1) + pshc(z, 1)
+    pshc(0, 2) = pshc(0, 2) + pshc(z, 2)
+NEXT z
+RETURN
+1313 ERASE pshc
+REM calculates average number of post-split-hands and average number of pairs
+REM that occur after the player finishes splitting pairs in a game wherein;
+REM the rules allow the player to split to a maximum of three post-split hands.
+FOR x = 0 TO 3
+    x(x) = mc(pc1) - x
+NEXT x
+FOR y = 0 TO 3
+    y(y) = mc(10) - y
+NEXT y
+pshc(1, 0) = (1 - x(0) / y(0)) * (1 - x(0) / y(1))
+pshc(1, 1) = 2 * pshc(1, 0)
+pshc(2, 0) = 2 * (1 - x(0) / y(0)) * (1 - x(0) / y(1)) * (1 - x(0) / y(2)) * x(0) / y(3)
+pshc(2, 1) = 3 * pshc(2, 0)
+pshc(3, 0) = 5 * (1 - x(0) / y(0)) * (1 - x(0) / y(1)) * x(0) / y(2) * x(1) / y(3)
+pshc(3, 1) = 3 * pshc(3, 0)
+pshc(3, 2) = pshc(3, 0) / 3
+pshc(4, 0) = 4 * (1 - x(0) / y(0)) * x(0) / y(1) * x(1) / y(2) * x(2) / y(3)
+pshc(4, 1) = 3 * pshc(4, 0)
+pshc(4, 2) = 2 * pshc(4, 0) / 3
+pshc(5, 0) = x(0) / y(0) * x(1) / y(1) * x(2) / y(2) * x(3) / y(3)
+pshc(5, 1) = 3 * pshc(5, 0)
+pshc(5, 2) = pshc(5, 0)
+FOR z = 1 TO 5
+    pshc(0, 1) = pshc(0, 1) + pshc(z, 1)
+    pshc(0, 2) = pshc(0, 2) + pshc(z, 2)
+NEXT z
+RETURN
+4343 ERASE pshc
+REM calculates average number of post-split-hands and average number of pairs
+REM that occur after the player finishes splitting pairs in a game wherein;
+REM the rules allow the player to split to a maximum of four post-split hands.
+FOR x = 0 TO 5
+    x(x) = mc(pc1) - x
+NEXT x
+FOR y = 0 TO 5
+    y(y) = mc(10) - y
+NEXT y
+pshc(1, 0) = (1 - x(0) / y(0)) * (1 - x(0) / y(1))
+pshc(1, 1) = 2 * pshc(1, 0)
+pshc(2, 0) = 2 * (1 - x(0) / y(0)) * (1 - x(0) / y(1)) * (1 - x(0) / y(2)) * x(0) / y(3)
+pshc(2, 1) = 3 * pshc(2, 0)
+pshc(3, 0) = 5 * (1 - x(0) / y(0)) * (1 - x(0) / y(1)) * (1 - x(0) / y(2))
+pshc(3, 0) = pshc(3, 0) * (1 - x(0) / y(3)) * x(0) / y(4) * x(1) / y(5)
+pshc(3, 1) = 4 * pshc(3, 0)
+pshc(4, 0) = 14 * (1 - x(0) / y(0)) * (1 - x(0) / y(1)) * (1 - x(0) / y(2))
+pshc(4, 0) = pshc(4, 0) * x(0) / y(3) * x(1) / y(4) * x(2) / y(5)
+pshc(4, 1) = 4 * pshc(4, 0)
+pshc(4, 2) = pshc(4, 0) * .25
+pshc(5, 0) = 14 * (1 - x(0) / y(0)) * (1 - x(0) / y(1)) * x(0) / y(2)
+pshc(5, 0) = pshc(5, 0) * x(1) / y(3) * x(2) / y(4) * x(3) / y(5)
+pshc(5, 1) = 4 * pshc(5, 0)
+pshc(5, 2) = pshc(5, 0) * .5
+pshc(6, 0) = 6 * (1 - x(0) / y(0)) * x(0) / y(1) * x(1) / y(2) * x(2) / y(3)
+pshc(6, 0) = phsc(6, 0) * x(3) / y(4) * x(4) / y(5)
+pshc(6, 1) = 4 * pshc(6, 0)
+pshc(6, 2) = pshc(6, 0) * .75
+pshc(7, 0) = x(0) / y(0) * x(1) / y(1) * x(2) / y(2) * x(3) / y(3) * x(4) / y(4) * x(5) / y(5)
+pshc(7, 1) = 4 * pshc(7, 1)
+pshc(7, 2) = pshc(7, 1)
+FOR z = 1 TO 7
+    pshc(0, 0) = pshc(0, 0) + pshc(z, 0)
+    pshc(0, 1) = pshc(0, 1) + pshc(z, 1)
+    pshc(0, 2) = pshc(0, 2) + pshc(z, 2)
+    REM PRINT pshc(0, 0); pshc(0, 1); pshc(0, 2): SLEEP 2
+NEXT z
 RETURN
 226 CLS:
 PRINT "ULTIMA282.BAS asks the user to enter the folder/filename prefix of the"
@@ -776,7 +857,7 @@ FOR k = 9 TO 0 STEP -1
                 hit(9, dc1) = q: br(9, dc1) = 1: far(9, dc1) = 1: sar(9, dc1) = 1: n = 9: aq(n, dc1, 1) = q: GOTO 333
             END IF
             GOSUB 666
-            FOR y = 0 TO 11
+            FOR y = 0 TO 12
             dbr(n, dc1, y) = df(y): NEXT y
             ERASE mc
             FOR x = 0 TO 12
@@ -849,15 +930,15 @@ FOR k = 9 TO 0 STEP -1
                     GOSUB 666
                 END IF
                 IF pc1 > pc2 THEN
-                    FOR y = 0 TO 11
+                    FOR y = 0 TO 12
                     dfar(n, dc1, y) = df(y): NEXT y
                 END IF
                 IF pc1 = pc2 THEN
-                    FOR y = 0 TO 11
+                    FOR y = 0 TO 12
                     dfar(n, dc1, y) = df(y): dsar(n, dc1, y) = df(y): NEXT y
                 END IF
                 IF pc2 > pc1 THEN
-                    FOR y = 0 TO 11
+                    FOR y = 0 TO 12
                     dsar(n, dc1, y) = df(y): NEXT y
                 END IF
                 ERASE mc
@@ -882,21 +963,36 @@ FOR k = 9 TO 0 STEP -1
                         mc(x) = mc(x) * (mc(10) - mc(0) - 1) / (mc(10) - mc(0))
                     NEXT x: mc(10) = mc(10) - 1
                 END IF
-                x = 2: y = mc(pc1) / mc(10): anh = 2
-                mc(11) = mc(pc1): mc(20) = mc(10)
+                IF most% = 2 THEN GOSUB 1111
+                IF most% = 3 THEN 
+                    IF mc(pc1) <> 0 OR rsa% = 1 THEN 
+                        GOSUB 1313
+                    END IF
+                    IF mc(pc1) = 0 AND rsa% <> 1 THEN
+                        GOSUB 1111
+                    END IF
+                END IF
+                IF most% > 3 THEN
+                    IF mc(pc1) <> 0 OR rsa% = 1 THEN 
+                        GOSUB 4343
+                    END IF
+                    IF mc(pc1) = 0 AND rsa% <> 1 THEN
+                        GOSUB 1111
+                    END IF
+                END IF                
+                mc(11) = mc(pc1): mc(20) = mc(10): x = 2
                 IF pc1 <> 0 OR rsa% = 1 THEN
                     DO WHILE x < most%
-                        anh = anh + y * x: x = x + 1
+                        x = x + 1
                         IF mc(11) = 0 THEN x = most%
                         IF mc(11) < 1 THEN mc(19) = mc(11) ELSE mc(19) = 1
                         mc(11) = mc(11) - mc(19): mc(20) = mc(20) - mc(19) - 1
-                        y = y * mc(11) / mc(20)
                     LOOP
                 END IF
                 IF mc(pc2) < 1 THEN mc(19) = mc(pc2) ELSE mc(19) = 1
                 IF mc(pc2) = 0 THEN GOTO 444
-                IF pc2 <> pc1 THEN prob = mc(pc2) / mc(10) / (1 - mc(pc1) / mc(10) + y)
-                IF pc2 = pc1 THEN prob = y / (1 - mc(pc1) / mc(10) + y)
+                IF pc2 <> pc1 THEN prob = mc(pc2) / mc(10) / (1 - mc(pc1) / mc(10) + pshc(0, 2))
+                IF pc2 = pc1 THEN prob = pshc(0, 2) / (1 - mc(pc1) / mc(10) + pshc(0, 2))
                 IF pc1 = 0 AND dsa% <> 1 THEN dadd(0) = pc1 + pc2: f(0, dadd(0)) = f(0, dadd(0)) + prob
                 mc(pc2) = mc(pc2) - mc(19): mc(10) = mc(10) - mc(19)
                 probs = probs + prob
@@ -937,7 +1033,8 @@ FOR k = 9 TO 0 STEP -1
                                 psar(n, dc1, x, y) = f(x, y)
                         NEXT y: NEXT x
                     END IF
-                    GOSUB 888: splithands(pc2, dc1) = splithands(pc2, dc1) * prob
+                    GOSUB 888
+                    splithands(pc2, dc1) = splithands(pc2, dc1) * prob
                     IF das% = 1 THEN
                         IF dh% <> 1 THEN GOSUB 222
                         IF dh% = 1 THEN IF (12 > pc1 + pc2 + 2 AND pc1 + pc2 + 2 > ld% - 1) THEN GOSUB 222
@@ -962,11 +1059,13 @@ FOR k = 9 TO 0 STEP -1
                 IF mc(pc2) < 1 THEN mc(19) = mc(pc2) ELSE mc(19) = 1
                 IF mc(pc2) = 0 THEN GOTO 444 ELSE mc(pc2) = mc(pc2) - mc(19): mc(10) = mc(10) - mc(19)
                 GOSUB 666
-                FOR y = 0 TO 11
+                FOR y = 0 TO 12
                 dfar(n, dc1, y) = df(y): dsar(n, dc1, y) = df(y): NEXT y
+                IF dc1 = 0 AND push% = 1 THEN df(4) = df(4) + df(10): df(10) = 0
+                IF dc1 = 9 AND ten% = 1 THEN df(4) = df(4) + df(10): df(10) = 0
                 FOR y = 0 TO 9
                     FOR z = 0 TO 5
-                        IF z = 5 THEN IF y = 9 AND bjsh% = 1 THEN q = q + f(0, y) * df(11) * blackjack ELSE q = q + f(0, y) * df(11)
+                        IF z = 5 THEN IF y = 9 AND bjsh% = 1 THEN q = q + f(0, y) * df(12) * blackjack ELSE q = q + f(0, y) * df(12)
                         IF z < 5 THEN IF z < y - 5 THEN IF y = 9 AND bjsh% = 1 THEN q = q + f(0, y) * df(z) * blackjack ELSE q = q + f(0, y) * df(z)
                         IF z < 5 THEN IF z > y - 5 THEN q = q - f(0, y) * df(z)
                         IF z < 4 THEN IF z = y - 5 THEN IF dwt% = 1 THEN q = q - f(0, y) * df(z)
@@ -986,14 +1085,17 @@ FOR k = 9 TO 0 STEP -1
                 NEXT x
             END IF
             ERASE splithands: ERASE df: probs = 0
-            IF hole% <> 1 THEN q = q * anh
-            IF dc1 = 0 THEN IF push% <> 1 THEN q = (q * (1 - mc9 / mc10) - mc9 / mc10) * (1 + hole%) ELSE IF hole% = 1 THEN q = q * anh
-            IF dc1 = 9 THEN IF ten% <> 1 THEN q = (q * (1 - mc0 / mc10) - mc0 / mc10) * (1 + hole%) ELSE IF hole% = 1 THEN q = q * anh
-            IF dc1 <> 0 AND dc1 <> 9 THEN IF hole% = 1 THEN q = anh * q
+            FOR x = 0 TO 12
+                df(x) = dbr(n, dc1, x)
+            NEXT x
+            IF dc1 = 0 AND push% = 1 THEN df(4) = df(4) + df(10): df(10) = 0
+            IF dc1 = 9 AND ten% = 1 THEN df(4) = df(4) + df(10): df(10) = 0
+            IF hole% <> 1 THEN q = pshc(0, 1) * q - df(10)
+            IF hole% = 1 THEN q = pshc(0, 1) * (q - df(10))
             aq(n, dc1, 30) = q
             IF q > hit(pc1 * (21 - pc1) / 2, dc1) THEN hit(pc1 * (21 - pc1) / 2, dc1) = q: br(pc1 * (21 - pc1) / 2, dc1) = 30
             split = q: REM PRINT USING "##"; pc1 + 1; : PRINT " "; : PRINT USING "##"; pc1 + 1; : PRINT " split strategy yields a win minus loss expectation of"; : PRINT USING "##.####"; q
-            333 FOR x = 0 TO 11
+            333 FOR x = 0 TO 12
                 df(x) = dbr(n, dc1, x)
             NEXT x
             hit(n, dc1) = hit(n, dc1) + insur
@@ -1010,12 +1112,21 @@ FOR k = 9 TO 0 STEP -1
             FOR x = 1 TO 5
                 PRINT x + 16; "    ";
             NEXT x
-            PRINT " bust  "
-            account# = account# + df(10)
+            PRINT " bust  ";
+            IF dc1 = 0 OR dc1 = 9 THEN
+                PRINT "  AJ   ";
+            END IF
+            PRINT " "
+            account# = account# + df(11)
             PRINT USING "####"; dc1 + 1;
             FOR y = 0 TO 5
-                IF y = 5 THEN y = 11
-                PRINT USING "####.###"; df(y) / (df(10) + 1E-08) * 100;
+                IF y = 5 THEN y = 12
+                PRINT USING "####.###"; df(y) / (df(11) + 1E-08) * 100;
+                IF y = 12 THEN
+                    IF dc1 = 0 OR dc1 = 9 THEN
+                        PRINT USING "####.###"; df(10) / (df(11) + 1E-08) * 100;
+                    END IF
+                END IF
             NEXT y: PRINT " "
             PRINT "total hands accounted for are ";: PRINT USING "###.###"; account# * 100;: PRINT "% of all possible"
             IF n = 9 THEN PRINT "blackjack yields a win minus loss expectation of";: PRINT USING "##.####"; hit(n, dc1)
@@ -1048,12 +1159,21 @@ FOR k = 9 TO 0 STEP -1
             FOR x = 1 TO 5
                 PRINT #1, x + 16; "    ";
             NEXT x
-            PRINT #1, " bust  "
-            account# = account# + df(10)
+            PRINT #1, " bust  ";
+            IF dc1 = 0 OR dc1 = 9 THEN
+                PRINT #1, "  AJ   ";
+            END IF
+            PRINT #1, " "
+            account# = account# + df(11)
             PRINT #1, USING "####"; dc1 + 1;
             FOR y = 0 TO 5
-                IF y = 5 THEN y = 11
-                PRINT #1, USING "####.###"; df(y) / (df(10) + 1E-08) * 100;
+                IF y = 5 THEN y = 12
+                PRINT #1, USING "####.###"; df(y) / (df(11) + 1E-08) * 100;
+                IF y = 12 THEN
+                    IF dc1 = 0 OR dc1 = 9 THEN
+                        PRINT #1, USING "####.###"; df(10) / (df(11) + 1E-08) * 100;
+                    END IF
+                END IF
             NEXT y: PRINT #1, " "
             PRINT #1, "total hands accounted for are ";: PRINT #1, USING "###.###"; account# * 100;: PRINT #1, "% of all possible"
             IF n = 9 THEN PRINT #1, "blackjack yields a win minus loss expectation of";: PRINT #1, USING "##.####"; hit(n, dc1)
@@ -1159,7 +1279,7 @@ w = 0
 OPEN v$ FOR RANDOM AS #1 LEN = LEN(database)
 FOR x = 0 TO 54
     FOR y = 0 TO 9
-        FOR z = 0 TO 11
+        FOR z = 0 TO 12
             w = w + 1
             database.dat = dbr(x, y, z)
             PUT #1, w, database
@@ -1182,7 +1302,7 @@ w = 0
 OPEN v$ FOR RANDOM AS #1 LEN = LEN(database)
 FOR x = 0 TO 54
     FOR y = 0 TO 9
-        FOR z = 0 TO 11
+        FOR z = 0 TO 12
             w = w + 1
             database.dat = dfar(x, y, z)
             PUT #1, w, database
@@ -1205,7 +1325,7 @@ w = 0
 OPEN v$ FOR RANDOM AS #1 LEN = LEN(database)
 FOR x = 0 TO 54
     FOR y = 0 TO 9
-        FOR z = 0 TO 11
+        FOR z = 0 TO 12
             w = w + 1
             database.dat = dsar(x, y, z)
             PUT #1, w, database
