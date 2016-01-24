@@ -86,23 +86,23 @@ TYPE bas
     dat AS SINGLE
 END TYPE
 DIM database AS bas: DIM num AS bs: DIM g(32) AS INTEGER: DIM h(32) AS INTEGER: DIM splithands(10, 9) AS DOUBLE
-DIM sd AS bsrules: DIM hit(54, 9) AS SINGLE: DIM sar(54, 9) AS INTEGER: DIM dbj(29) AS DOUBLE
+DIM sd AS bsrules: DIM hit(54, 9) AS SINGLE: DIM sar(54, 9) AS INTEGER: DIM x(5) AS DOUBLE: DIM y(5) AS DOUBLE
 DIM far(54, 9) AS INTEGER: DIM br(54, 9) AS INTEGER: DIM dadd(14) AS INTEGER: DIM splitprob(9) AS DOUBLE
-DIM pmult(14) AS INTEGER: DIM pp(14) AS DOUBLE: DIM padd(14) AS INTEGER: DIM splitdbj(10, 9): DIM aq(54, 9, 32)
+DIM pmult(14) AS INTEGER: DIM pp(14) AS DOUBLE: DIM padd(14) AS INTEGER: DIM aq(54, 9, 32)
 DIM dmult(14) AS INTEGER: DIM dp(14) AS DOUBLE: DIM duc(10): DIM f(29) AS DOUBLE: DIM card(22)
-DIM mc(40) AS DOUBLE: DIM df(10) AS DOUBLE: DIM mv(5) AS INTEGER: DIM puc(54): DIM mc21po(11) AS SINGLE
-DIM pc1 AS INTEGER: DIM pc2 AS INTEGER: DIM dc1 AS INTEGER: DIM pdenom(12) AS INTEGER
+DIM mc(40) AS DOUBLE: DIM df(12) AS DOUBLE: DIM mv(5) AS INTEGER: DIM puc(54): DIM mc21po(11) AS SINGLE
+DIM pc1 AS INTEGER: DIM pc2 AS INTEGER: DIM dc1 AS INTEGER: DIM pdenom(12) AS INTEGER: DIM pshc(7, 2) AS DOUBLE
 GOTO 226
 777 pmult(2) = pc1 * pc2: padd(2) = pc1 + pc2 + 2: pp(2) = 1: pp(0) = pp(2): padd(0) = padd(2)
 IF pmult(2) = 0 AND padd(2) > h + 1 THEN padd(0) = padd(0) + 10
 IF padd(0) > g - 1 AND dd% = 0 THEN
-    IF padd(0) = 21 AND bjsh% = 1 THEN f(I) = f(I) + pp(0) * blackjack: GOTO 18
-    IF padd(0) > 21 THEN f(I) = f(I) - pp(0): GOTO 18
-    IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0): GOTO 18
+    IF padd(0) = 21 AND bjsh% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10)) * blackjack: GOTO 18
+    IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10)): GOTO 18
+    IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10)): GOTO 18
     GOSUB 666: GOTO 18
 END IF
 IF nodsa% = 1 THEN
-    IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0): GOTO 18
+    IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10)): GOTO 18
     GOSUB 666: GOTO 18
 END IF
 FOR s = 0 TO 9 STEP 1
@@ -113,11 +113,11 @@ FOR s = 0 TO 9 STEP 1
         IF padd(3) = 18 THEN
             IF pc1 = 6 AND pc2 = 6 THEN
                 IF dc1 = 6 THEN po777 = mc21po(1) + mc21po(11) ELSE po777 = mc21po(1) + mc21po(2) + mc21po(3)
-                IF po777 <> 0 THEN pp(0) = pp(3) * po777: f(I) = f(I) + pp(0): mc(s) = mc(s) + mc(14): mc(10) = mc(10) + mc(14): GOTO 19
+                IF po777 <> 0 THEN pp(0) = pp(3) * po777: f(I) = f(I) + pp(0) * (1 - df(10)): mc(s) = mc(s) + mc(14): mc(10) = mc(10) + mc(14): GOTO 19
             END IF
-            IF pc1 = 5 THEN IF pc2 = 6 OR pc2 = 7 THEN po678 = mc21po(8) + mc21po(9) + mc21po(10): IF po678 <> 0 THEN pp(0) = pp(3) * po678: f(I) = f(I) + pp(0): mc(s) = mc(s) + mc(14): mc(10) = mc(10) + mc(14): GOTO 19
-            IF pc1 = 6 THEN IF pc2 = 5 OR pc2 = 7 THEN po678 = mc21po(8) + mc21po(9) + mc21po(10): IF po678 <> 0 THEN pp(0) = pp(3) * po678: f(I) = f(I) + pp(0): mc(s) = mc(s) + mc(14): mc(10) = mc(10) + mc(14): GOTO 19
-            IF pc1 = 7 THEN IF pc2 = 5 OR pc2 = 6 THEN po678 = mc21po(8) + mc21po(9) + mc21po(10): IF po678 <> 0 THEN pp(0) = pp(3) * po678: f(I) = f(I) + pp(0): mc(s) = mc(s) + mc(14): mc(10) = mc(10) + mc(14): GOTO 19
+            IF pc1 = 5 THEN IF pc2 = 6 OR pc2 = 7 THEN po678 = mc21po(8) + mc21po(9) + mc21po(10): IF po678 <> 0 THEN pp(0) = pp(3) * po678: f(I) = f(I) + pp(0) * (1 - df(10)): mc(s) = mc(s) + mc(14): mc(10) = mc(10) + mc(14): GOTO 19
+            IF pc1 = 6 THEN IF pc2 = 5 OR pc2 = 7 THEN po678 = mc21po(8) + mc21po(9) + mc21po(10): IF po678 <> 0 THEN pp(0) = pp(3) * po678: f(I) = f(I) + pp(0) * (1 - df(10)): mc(s) = mc(s) + mc(14): mc(10) = mc(10) + mc(14): GOTO 19
+            IF pc1 = 7 THEN IF pc2 = 5 OR pc2 = 6 THEN po678 = mc21po(8) + mc21po(9) + mc21po(10): IF po678 <> 0 THEN pp(0) = pp(3) * po678: f(I) = f(I) + pp(0) * (1 - df(10)): mc(s) = mc(s) + mc(14): mc(10) = mc(10) + mc(14): GOTO 19
         END IF
     END IF
     IF pmult(3) = 0 THEN
@@ -125,8 +125,8 @@ FOR s = 0 TO 9 STEP 1
         IF padd(3) < h + 2 AND dd% = 1 THEN padd(0) = padd(0) + 10
     END IF
     IF padd(0) > g - 1 OR dd% = 1 THEN
-        IF padd(0) > 21 THEN f(I) = f(I) - pp(0)
-        IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0)
+        IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10))
+        IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10))
         IF padd(0) = 21 AND immed% <> 1 THEN GOSUB 666
         IF padd(0) < 21 THEN GOSUB 666
         mc(s) = mc(s) + mc(14): mc(10) = mc(10) + mc(14): GOTO 19
@@ -137,8 +137,8 @@ FOR s = 0 TO 9 STEP 1
         IF mc(t) = 0 THEN GOTO 20 ELSE pp(4) = pp(3) * mc(t) / mc(10): pp(0) = pp(4): mc(t) = mc(t) - mc(15): mc(10) = mc(10) - mc(15)
         IF pmult(4) = 0 AND padd(4) > h + 1 AND padd(4) < 12 THEN padd(0) = padd(0) + 10
         IF padd(0) > g - 1 THEN
-            IF padd(0) > 21 THEN f(I) = f(I) - pp(0)
-            IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0)
+            IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10))
+            IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10))
             IF padd(0) = 21 AND immed% <> 1 THEN GOSUB 666
             IF padd(0) < 21 THEN GOSUB 666
             mc(t) = mc(t) + mc(15): mc(10) = mc(10) + mc(15): GOTO 20
@@ -149,9 +149,9 @@ FOR s = 0 TO 9 STEP 1
             IF mc(u) = 0 THEN GOTO 21 ELSE pp(5) = pp(4) * mc(u) / mc(10): pp(0) = pp(5): mc(u) = mc(u) - mc(16): mc(10) = mc(10) - mc(16)
             IF pmult(5) = 0 AND padd(5) > h + 1 AND padd(5) < 12 THEN padd(0) = padd(0) + 10
             IF padd(5) > g - 1 THEN
-                IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(4) <> 0 THEN pp(0) = pp(5) * mc21po(4): f(I) = f(I) + pp(0): mc(u) = mc(u) + mc(16): mc(10) = mc(10) + mc(16): GOTO 21
-                IF padd(0) > 21 THEN f(I) = f(I) - pp(0)
-                IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0)
+                IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(4) <> 0 THEN pp(0) = pp(0) * mc21po(4): f(I) = f(I) + pp(0) * (1 - df(10)): mc(u) = mc(u) + mc(16): mc(10) = mc(10) + mc(16): GOTO 21
+                IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10))
+                IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10))
                 IF padd(0) = 21 AND immed% <> 1 THEN GOSUB 666
                 IF padd(0) < 21 THEN GOSUB 666
                 mc(u) = mc(u) + mc(16): mc(10) = mc(10) + mc(16): GOTO 21
@@ -162,26 +162,26 @@ FOR s = 0 TO 9 STEP 1
                 IF mc(v) = 0 THEN GOTO 22 ELSE pp(6) = pp(5) * mc(v) / mc(10): pp(0) = pp(6): mc(v) = mc(v) - mc(17): mc(10) = mc(10) - mc(17)
                 IF pmult(6) = 0 AND padd(6) > h + 1 AND padd(6) < 10 THEN padd(0) = padd(0) + 10
                 IF padd(0) > g - 1 THEN
-                    IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(5) <> 0 THEN pp(0) = pp(6) * mc21po(5): f(I) = f(I) + pp(0): mc(v) = mc(v) + mc(17): mc(10) = mc(10) + mc(17): GOTO 22
-                    IF schw% = 1 THEN IF padd(6) < 22 THEN f(I) = f(I) + pp(0): mc(v) = mc(v) + mc(17): mc(10) = mc(10) + mc(17): GOTO 22
-                    IF schw% = 1 THEN IF padd(6) > 21 THEN f(I) = f(I) - pp(0): mc(v) = mc(v) + mc(17): mc(10) = mc(10) + mc(17): GOTO 22
-                    IF padd(0) > 21 THEN f(I) = f(I) - pp(0)
-                    IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0)
+                    IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(5) <> 0 THEN pp(0) = pp(0) * mc21po(5): f(I) = f(I) + pp(0) * (1 - df(10)): mc(v) = mc(v) + mc(17): mc(10) = mc(10) + mc(17): GOTO 22
+                    IF schw% = 1 THEN IF padd(6) < 22 THEN f(I) = f(I) + pp(0) * (1 - df(10)): mc(v) = mc(v) + mc(17): mc(10) = mc(10) + mc(17): GOTO 22
+                    IF schw% = 1 THEN IF padd(6) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10)): mc(v) = mc(v) + mc(17): mc(10) = mc(10) + mc(17): GOTO 22
+                    IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10))
+                    IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10))
                     IF padd(0) = 21 AND immed% <> 1 THEN GOSUB 666
                     IF padd(0) < 21 THEN GOSUB 666
                     mc(v) = mc(v) + mc(17): mc(10) = mc(10) + mc(17): GOTO 22
                 END IF
-                IF schw% = 1 THEN IF padd(6) < 22 THEN f(I) = f(I) + pp(0): mc(v) = mc(v) + mc(17): mc(10) = mc(10) + mc(17): GOTO 22
-                IF schw% = 1 THEN IF padd(6) > 21 THEN f(I) = f(I) - pp(0): mc(v) = mc(v) + mc(17): mc(10) = mc(10) + mc(17): GOTO 22
+                IF schw% = 1 THEN IF padd(6) < 22 THEN f(I) = f(I) + pp(0) * (1 - df(10)): mc(v) = mc(v) + mc(17): mc(10) = mc(10) + mc(17): GOTO 22
+                IF schw% = 1 THEN IF padd(6) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10)): mc(v) = mc(v) + mc(17): mc(10) = mc(10) + mc(17): GOTO 22
                 FOR w = 0 TO 9 STEP 1
                     pmult(7) = pmult(6) * w: padd(7) = padd(6) + w + 1: padd(0) = padd(7)
                     IF mc(w) < 1 THEN mc(12) = mc(w) ELSE mc(12) = 1
                     IF mc(w) = 0 THEN GOTO 23 ELSE pp(7) = pp(6) * mc(w) / mc(10): pp(0) = pp(7): mc(w) = mc(w) - mc(12): mc(10) = mc(10) - mc(12)
                     IF pmult(7) = 0 AND padd(7) > h + 1 AND padd(7) < 12 THEN padd(0) = padd(0) + 10
                     IF padd(0) > g - 1 THEN
-                        IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(6) <> 0 THEN pp(0) = pp(7) * mc21po(6): f(I) = f(I) + pp(0): mc(w) = mc(w) + mc(12): mc(10) = mc(10) + mc(12): GOTO 23
-                        IF padd(0) > 21 THEN f(I) = f(I) - pp(0)
-                        IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0)
+                        IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(6) <> 0 THEN pp(0) = pp(0) * mc21po(6): f(I) = f(I) + pp(0) * (1 - df(10)): mc(w) = mc(w) + mc(12): mc(10) = mc(10) + mc(12): GOTO 23
+                        IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10))
+                        IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10))
                         IF padd(0) = 21 AND immed% <> 1 THEN GOSUB 666
                         IF padd(0) < 21 THEN GOSUB 666
                         mc(w) = mc(w) + mc(12): mc(10) = mc(10) + mc(12): GOTO 23
@@ -192,9 +192,9 @@ FOR s = 0 TO 9 STEP 1
                         IF mc(o) = 0 THEN GOTO 24 ELSE pp(8) = pp(7) * mc(o) / mc(10): pp(0) = pp(8): mc(o) = mc(o) - mc(18): mc(10) = mc(10) - mc(18)
                         IF pmult(8) = 0 AND padd(8) > h + 1 AND padd(8) < 12 THEN padd(0) = padd(0) + 10
                         IF padd(0) > g - 1 THEN
-                            IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(0) = pp(8) * mc21po(7): f(I) = f(I) + pp(0): mc(o) = mc(o) + mc(18): mc(10) = mc(10) + mc(18): GOTO 24
-                            IF padd(0) > 21 THEN f(I) = f(I) - pp(0)
-                            IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0)
+                            IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(0) = pp(0) * mc21po(7): f(I) = f(I) + pp(0) * (1 - df(10)): mc(o) = mc(o) + mc(18): mc(10) = mc(10) + mc(18): GOTO 24
+                            IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10))
+                            IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10))
                             IF padd(0) = 21 AND immed% <> 1 THEN GOSUB 666
                             IF padd(0) < 21 THEN GOSUB 666
                             mc(o) = mc(o) + mc(18): mc(10) = mc(10) + mc(18): GOTO 24
@@ -202,12 +202,12 @@ FOR s = 0 TO 9 STEP 1
                         FOR aa = 0 TO 9 STEP 1
                             pmult(9) = pmult(8) * aa: padd(9) = padd(8) + aa + 1: padd(0) = padd(9)
                             IF mc(aa) < 1 THEN mc(22) = mc(aa) ELSE mc(22) = 1
-                            IF mc(aa) = 0 THEN GOTO 25 ELSE pp(9) = pp(8) * mc(aa) / mc(10): pp(0) = pp(9): mc(aa) = mc(aa) - mc(22): mc(10) = mc(10) - mc(22)
+                            IF mc(aa) = 0 THEN GOTO 25 ELSE pp(9) = pp(8) * mc(aa) / mc(10): pp(0) = pp(9): pp(0) = pp(0) * (1 - df(10)): mc(aa) = mc(aa) - mc(22): mc(10) = mc(10) - mc(22)
                             IF pmult(9) = 0 AND padd(9) > h + 1 AND padd(9) < 12 THEN padd(0) = padd(0) + 10
                             IF padd(0) > g - 1 THEN
-                                IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(0) = pp(9) * mc21po(7): f(I) = f(I) + pp(0): mc(aa) = mc(aa) + mc(22): mc(10) = mc(10) + mc(22): GOTO 25
-                                IF padd(0) > 21 THEN f(I) = f(I) - pp(0)
-                                IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0)
+                                IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(0) = pp(0) * mc21po(7): f(I) = f(I) + pp(0) * (1 - df(10)): mc(aa) = mc(aa) + mc(22): mc(10) = mc(10) + mc(22): GOTO 25
+                                IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10))
+                                IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10))
                                 IF padd(0) = 21 AND immed% <> 1 THEN GOSUB 666
                                 IF padd(0) < 21 THEN GOSUB 666
                                 mc(aa) = mc(aa) + mc(22): mc(10) = mc(10) + mc(22): GOTO 25
@@ -218,9 +218,9 @@ FOR s = 0 TO 9 STEP 1
                                 IF mc(ab) = 0 THEN GOTO 26 ELSE pp(10) = pp(9) * mc(ab) / mc(10): pp(0) = pp(10): mc(ab) = mc(ab) - mc(23): mc(10) = mc(10) - mc(23)
                                 IF pmult(10) = 0 AND padd(10) > h + 1 AND padd(10) < 12 THEN padd(0) = padd(0) + 10
                                 IF padd(0) > g - 1 THEN
-                                    IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(0) = pp(10) * mc21po(7): f(I) = f(I) + pp(0): mc(ab) = mc(ab) + mc(23): mc(10) = mc(10) + mc(23): GOTO 26
-                                    IF padd(0) > 21 THEN f(I) = f(I) - pp(0)
-                                    IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0)
+                                    IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(0) = pp(0) * mc21po(7): f(I) = f(I) + pp(0) * (1 - df(10)): mc(ab) = mc(ab) + mc(23): mc(10) = mc(10) + mc(23): GOTO 26
+                                    IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10))
+                                    IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10))
                                     IF padd(0) = 21 AND immed% <> 1 THEN GOSUB 666
                                     IF padd(0) < 21 THEN GOSUB 666
                                     mc(ab) = mc(ab) + mc(23): mc(10) = mc(10) + mc(23): GOTO 26
@@ -231,9 +231,9 @@ FOR s = 0 TO 9 STEP 1
                                     IF mc(ac) = 0 THEN GOTO 27 ELSE pp(11) = pp(10) * mc(ac) / mc(10): pp(0) = pp(11): mc(ac) = mc(ac) - mc(24): mc(10) = mc(10) - mc(24)
                                     IF pmult(11) = 0 AND padd(11) > h + 1 AND padd(11) < 12 THEN padd(0) = padd(0) + 10
                                     IF padd(0) > g - 1 THEN
-                                        IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(0) = pp(11) * mc21po(7): f(I) = f(I) + pp(0): mc(ac) = mc(ac) + mc(24): mc(10) = mc(10) + mc(24): GOTO 27
-                                        IF padd(0) > 21 THEN f(I) = f(I) - pp(0)
-                                        IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0)
+                                        IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(0) = pp(0) * mc21po(7): f(I) = f(I) + pp(0) * (1 - df(10)): mc(ac) = mc(ac) + mc(24): mc(10) = mc(10) + mc(24): GOTO 27
+                                        IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10))
+                                        IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10))
                                         IF padd(0) = 21 AND immed% <> 1 THEN GOSUB 666
                                         IF padd(0) < 21 THEN GOSUB 666
                                         mc(ac) = mc(ac) + mc(24): mc(10) = mc(10) + mc(24): GOTO 27
@@ -243,9 +243,9 @@ FOR s = 0 TO 9 STEP 1
                                         IF mc(ad) < 1 THEN mc(28) = mc(ad) ELSE mc(28) = 1
                                         IF mc(ad) = 0 THEN GOTO 15 ELSE pp(12) = pp(11) * mc(ad) / mc(10): pp(0) = pp(12): mc(ad) = mc(ad) - mc(28): mc(10) = mc(10) - mc(28)
                                         IF padd(0) > g - 1 THEN
-                                            IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(0) = pp(12) * mc21po(7): f(I) = f(I) + pp(0): mc(ad) = mc(ad) + mc(28): mc(10) = mc(10) + mc(28): GOTO 15
-                                            IF padd(0) > 21 THEN f(I) = f(I) - pp(0)
-                                            IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0)
+                                            IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(0) = pp(0) * mc21po(7): f(I) = f(I) + pp(0) * (1 - df(10)): mc(ad) = mc(ad) + mc(28): mc(10) = mc(10) + mc(28): GOTO 15
+                                            IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10))
+                                            IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10))
                                             IF padd(0) = 21 AND immed% <> 1 THEN GOSUB 666
                                             IF padd(0) < 21 THEN GOSUB 666
                                             mc(ad) = mc(ad) + mc(28): mc(10) = mc(10) + mc(28): GOTO 15
@@ -255,9 +255,9 @@ FOR s = 0 TO 9 STEP 1
                                             IF mc(ae) < 1 THEN mc(29) = mc(ae) ELSE mc(29) = 1
                                             IF mc(ae) = 0 THEN GOTO 16 ELSE pp(13) = pp(12) * mc(ae) / mc(10): pp(0) = pp(13): mc(ae) = mc(ae) - mc(29): mc(10) = mc(10) - mc(29)
                                             IF padd(13) > g - 1 THEN
-                                                IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(0) = pp(13) * mc21po(7): f(I) = f(I) + pp(0): mc(ae) = mc(ae) + mc(29): mc(10) = mc(10) + mc(29): GOTO 16
-                                                IF padd(0) > 21 THEN f(I) = f(I) - pp(0)
-                                                IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0)
+                                                IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(0) = pp(0) * mc21po(7): f(I) = f(I) + pp(0) * (1 - df(10)): mc(ae) = mc(ae) + mc(29): mc(10) = mc(10) + mc(29): GOTO 16
+                                                IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10))
+                                                IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10))
                                                 IF padd(0) = 21 AND immed% <> 1 THEN GOSUB 666
                                                 IF padd(0) < 21 THEN GOSUB 666
                                                 mc(ae) = mc(ae) + mc(29): mc(10) = mc(10) + mc(29): GOTO 16
@@ -267,9 +267,9 @@ FOR s = 0 TO 9 STEP 1
                                                 IF mc(af) < 1 THEN mc(30) = mc(af) ELSE mc(30) = 1
                                                 IF mc(af) = 0 THEN GOTO 17 ELSE pp(14) = pp(13) * mc(af) / mc(10): pp(0) = pp(14): mc(af) = mc(af) - mc(30): mc(10) = mc(10) - mc(30)
                                                 IF padd(14) > g - 15 THEN
-                                                    IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(0) = pp(14) * mc21po(7): f(I) = f(I) + pp(0): mc(af) = mc(af) + mc(30): mc(10) = mc(10) + mc(30): GOTO 17
-                                                    IF padd(0) > 21 THEN f(I) = f(I) - pp(0)
-                                                    IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0)
+                                                    IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(0) = pp(0) * mc21po(7): f(I) = f(I) + pp(0) * (1 - df(10)): mc(af) = mc(af) + mc(30): mc(10) = mc(10) + mc(30): GOTO 17
+                                                    IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10))
+                                                    IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10))
                                                     IF padd(0) = 21 AND immed% <> 1 THEN GOSUB 666
                                                     IF padd(0) < 21 THEN GOSUB 666
                                                     mc(af) = mc(af) + mc(30): mc(10) = mc(10) + mc(30): GOTO 17
@@ -299,7 +299,7 @@ FOR s = 0 TO 9 STEP 1
     mc(s) = mc(s) + mc(14): mc(10) = mc(10) + mc(14)
 19 NEXT s
 18 RETURN
-666 dmult(1) = dc1: dadd(1) = dc1 + 1: dadd(0) = dadd(1): dp(1) = 1: ERASE df
+666 dmult(1) = dc1: dadd(1) = dc1 + 1: dadd(0) = dadd(1): dp(1) = 1
 FOR jr = 0 TO 9 STEP 1
     dmult(2) = dmult(1) * jr: dadd(2) = dadd(1) + jr + 1: dadd(0) = dadd(2)
     IF mc(jr) < 1 THEN mc(34) = mc(jr) ELSE mc(34) = 1
@@ -310,16 +310,13 @@ FOR jr = 0 TO 9 STEP 1
         IF dadd(0) > padd(0) AND dadd(0) < 21 THEN f(I) = f(I) - pp(0) * dp(2)
         IF dadd(0) < padd(0) OR dadd(0) > 21 THEN f(I) = f(I) + pp(0) * dp(2)
         IF dadd(0) = 21 THEN
-            dbj(I) = dbj(I) - pp(0) * dp(2)
             IF dc1 = 0 AND push% = 1 THEN
-                dbj(I) = 0
                 IF dadd(0) > padd(0) THEN f(I) = f(I) - pp(0) * dp(2)
             END IF
             IF dc1 = 9 AND ten% = 1 THEN
-                dbj(I) = 0
                 IF dadd(0) > padd(0) THEN f(I) = f(I) - pp(0) * dp(2)
             END IF
-        END IF
+        END IF            
         GOTO 28
     END IF
     FOR js = 0 TO 9 STEP 1
@@ -483,7 +480,10 @@ FOR jr = 0 TO 9 STEP 1
     dmult(2) = dmult(1) * jr: dadd(2) = dadd(1) + jr + 1: dadd(0) = dadd(2)
     IF mc(jr) < 1 THEN mc(34) = mc(jr) ELSE mc(34) = 1
     IF mc(jr) = 0 THEN GOTO 1028 ELSE dp(2) = mc(jr) / mc(10): mc(jr) = mc(jr) - mc(34): mc(10) = mc(10) - mc(34)
-    IF dmult(2) = 0 AND dadd(2) > j + 1 THEN dadd(0) = dadd(0) + 10
+    IF dmult(2) = 0 AND dadd(2) > j + 1 THEN 
+        IF dadd(0) <> 11 THEN dadd(0) = dadd(0) + 10
+        IF dadd(0) = 11 THEN df(10) = df(10) + dp(2): mc(jr) = mc(jr) + mc(34): mc(10) = mc(10) + mc(34): GOTO 1028
+    END IF
     IF dadd(0) > 16 THEN mv(1) = dadd(0) - 17: df(mv(1)) = df(mv(1)) + dp(2): mc(jr) = mc(jr) + mc(34): mc(10) = mc(10) + mc(34): GOTO 1028
     FOR js = 0 TO 9 STEP 1
         dmult(3) = dmult(2) * js: dadd(3) = dadd(2) + js + 1: dadd(0) = dadd(3)
@@ -580,17 +580,23 @@ FOR jr = 0 TO 9 STEP 1
     1029 NEXT js
     mc(jr) = mc(jr) + mc(34): mc(10) = mc(10) + mc(34)
 1028 NEXT jr
+FOR y = 0 TO 10
+df(11) = df(11) + df(y): NEXT y
+FOR y = 1 TO 5
+df(12) = df(12) + df(4 + y): NEXT y
 RETURN
 888 IF pc1 <= pc2 THEN n = pc1 / 2 * (19 - pc1) + pc2 ELSE n = pc2 / 2 * (19 - pc2) + pc1
 x = 0
-IF split% <> 1 THEN hit(n, dc1) = -3 ELSE splithands(pc2, dc1) = -3: splitdbj(pc2, dc1) = -3
+IF split% <> 1 THEN hit(n, dc1) = -3 ELSE splithands(pc2, dc1) = -3
 FOR v = 12 TO 19
     FOR w = 5 TO 8
         IF w + 12 < v THEN w = v - 12
         x = x + 1
         IF v >= hl% AND v <= hu% AND w + 12 >= sl% AND w + 12 <= su% THEN
+            IF dc1 = 0 AND push% = 1 THEN df(10) = 0
+            IF dc1 = 9 AND ten% = 1 THEN df(10) = 0 
             IF split% <> 1 THEN
-                q# = f(x) + dbj(x)
+                q# = f(x) - df(10)
                 aq(n, dc1, x) = q#
                 IF q# > hit(n, dc1) THEN
                     IF v > pc1 + pc2 + 1 THEN hit(n, dc1) = q#: br(n, dc1) = x
@@ -600,17 +606,17 @@ FOR v = 12 TO 19
             IF split% = 1 THEN
                 q# = f(x)
                 IF n = 9 AND bjsh% = 1 THEN q# = q# * blackjack
-                IF pc2 < pc1 AND q# + dbj(x) > splithands(pc2, dc1) + splitdbj(pc2, dc1) THEN
-                    IF v > pc1 + pc2 + 1 THEN splithands(pc2, dc1) = q#: splitdbj(pc2, dc1) = dbj(x): far(n, dc1) = x
-                    IF v = pc1 + pc2 + 1 AND v = 19 THEN splithands(pc2, dc1) = q#: splitdbj(pc2, dc1) = dbj(x): far(n, dc1) = x
+                IF pc2 < pc1 AND q# > splithands(pc2, dc1) THEN
+                    IF v > pc1 + pc2 + 1 THEN splithands(pc2, dc1) = q#: far(n, dc1) = x
+                    IF v = pc1 + pc2 + 1 AND v = 19 THEN splithands(pc2, dc1) = q#: far(n, dc1) = x
                 END IF
-                IF pc2 = pc1 AND q# + dbj(x) > splithands(pc2, dc1) + splitdbj(pc2, dc1) THEN
-                    IF v > pc1 + pc2 + 1 THEN splithands(pc2, dc1) = q#: splitdbj(pc2, dc1) = dbj(x): far(n, dc1) = x: sar(n, dc1) = x
-                    IF v = pc1 + pc2 + 1 AND v = 19 THEN splithands(pc2, dc1) = q#: splitdbj(pc2, dc1) = dbj(x): far(n, dc1) = x: sar(n, dc1) = x
+                IF pc2 = pc1 AND q# > splithands(pc2, dc1) THEN
+                    IF v > pc1 + pc2 + 1 THEN splithands(pc2, dc1) = q#: far(n, dc1) = x: sar(n, dc1) = x
+                    IF v = pc1 + pc2 + 1 AND v = 19 THEN splithands(pc2, dc1) = q#: far(n, dc1) = x: sar(n, dc1) = x
                 END IF
-                IF pc1 < pc2 AND q# + dbj(x) > splithands(pc2, dc1) + splitdbj(pc2, dc1) THEN
-                    IF v > pc1 + pc2 + 1 THEN splithands(pc2, dc1) = q#: splitdbj(pc2, dc1) = dbj(x): sar(n, dc1) = x
-                    IF v = pc1 + pc2 + 1 AND v = 19 THEN splithands(pc2, dc1) = q#: splitdbj(pc2, dc1) = dbj(x): sar(n, dc1) = x
+                IF pc1 < pc2 AND q# > splithands(pc2, dc1) THEN
+                    IF v > pc1 + pc2 + 1 THEN splithands(pc2, dc1) = q#: sar(n, dc1) = x
+                    IF v = pc1 + pc2 + 1 AND v = 19 THEN splithands(pc2, dc1) = q#: sar(n, dc1) = x
                 END IF
             END IF
             IF pc1 * pc2 = 0 THEN
@@ -679,42 +685,36 @@ IF mc(pc2) = 0 THEN GOTO 228 ELSE mc(pc2) = mc(pc2) - mc(19): mc(10) = mc(10) - 
 IF mc(dc1) < 1 THEN mc(19) = mc(dc1) ELSE mc(19) = 1
 IF mc(dc1) = 0 THEN GOTO 228 ELSE mc(dc1) = mc(dc1) - mc(19): mc(10) = mc(10) - mc(19)
 mc0 = mc(0): mc9 = mc(9): mc10 = mc(10)
-I = 0: dd% = 1: g = 19: h = 8: qdbj# = 0: q# = 0: ERASE f: ERASE dbj
-GOSUB 777: q# = q# + f(0): qdbj# = qdbj# + dbj(0)
+I = 0: dd% = 1: g = 19: h = 8: q# = 0: ERASE f
+GOSUB 777: q# = q# + f(0)
 228 dd% = 0
-q# = 2 * q#: q1# = q#
-IF dc1 = 0 THEN
-    IF hole% <> 1 AND push% <> 1 THEN q1# = q# + qdbj#
-    IF hole% = 1 AND push% <> 1 THEN q1# = q# + 2 * qdbj#
-END IF
-IF dc1 = 9 THEN
-    IF hole% <> 1 AND ten% <> 1 THEN q1# = q# + qdbj#
-    IF hole% = 1 AND ten% <> 1 THEN q1# = q# + 2 * qdbj#
-END IF
+IF dc1 = 0 AND push% = 1 THEN df(10) = 0
+IF dc1 = 9 AND ten% = 1 THEN df(10) = 0 
 IF split% <> 1 THEN
-    aq(n, dc1, 32) = q1#
-    IF q1# > hit(n, dc1) THEN hit(n, dc1) = q1#: br(n, dc1) = 32
-    ddown = q1#
+    IF hole% <> 1 THEN q# = 2 * q# - df(10)
+    IF hole% = 1 THEN q# = 2 * (q# - df(10))
+    aq(n, dc1, 32) = q#
+    IF q# > hit(n, dc1) THEN hit(n, dc1) = q#: br(n, dc1) = 32
+    ddown = q#
 END IF
 IF split% = 1 THEN
+    IF hole% <> 1 THEN q# = 2 * q#
+    IF hole% = 1 THEN q# = 2 * (q# - df(10))
     IF pc1 > pc2 THEN
-        IF q1# > splithands(pc2, dc1) + splitdbj(pc2, dc1) THEN
+        IF q# > splithands(pc2, dc1) THEN
             splithands(pc2, dc1) = q#
-            splitdbj(pc2, dc1) = qdbj#
             far(n, dc1) = 32
         END IF
     END IF
     IF pc2 = pc1 THEN
-        IF q1# > splithands(pc2, dc1) + splitdbj(pc2, dc1) THEN
+        IF q# > splithands(pc2, dc1) THEN
             splithands(pc2, dc1) = q#
-            splitdbj(pc2, dc1) = qdbj#
             far(n, dc1) = 32: sar(n, dc1) = 32
         END IF
     END IF
     IF pc2 > pc1 THEN
-        IF q1# > splithands(pc2, dc1) + splitdbj(pc2, dc1) THEN
+        IF q# > splithands(pc2, dc1) THEN
             splithands(pc2, dc1) = q#
-            splitdbj(pc2, dc1) = qdbj#
             sar(n, dc1) = 32
         END IF
     END IF
@@ -728,6 +728,96 @@ RETURN
     IF q# > hit(n, dc1) THEN hit(n, dc1) = q#: br(n, dc1) = 31
     srndr = q#
 END IF
+RETURN
+1111 ERASE pshc
+REM calculates average number of post-split-hands and average number of pairs
+REM that occur after the player finishes splitting pairs in a game wherein;
+REM the rules allow the player to split to a maximum of two post-split hands.
+FOR x = 0 TO 1
+    x(x) = mc(pc1) - x
+NEXT x
+FOR y = 0 TO 1
+    y(y) = mc(10) - y
+NEXT y
+pshc(1, 0) = (1 - x(0) / y(0)) * (1 - x(0) / y(1))
+pshc(1, 1) = 2 * pshc(1, 0)
+pshc(2, 0) = (1 - x(0) / y(0)) * x(0) / y(1)
+pshc(2, 1) = 2 * pshc(2, 0)
+pshc(2, 2) = pshc(2, 0) * .5
+pshc(3, 0) = x(0) / y(0) * x(1) / y(1)
+pshc(3, 1) = 2 * pshc(3, 0)
+pshc(3, 2) = pshc(3, 0)
+FOR z = 1 TO 3
+    pshc(0, 1) = pshc(0, 1) + pshc(z, 1)
+    pshc(0, 2) = pshc(0, 2) + pshc(z, 2)
+NEXT z
+RETURN
+1313 ERASE pshc
+REM calculates average number of post-split-hands and average number of pairs
+REM that occur after the player finishes splitting pairs in a game wherein;
+REM the rules allow the player to split to a maximum of three post-split hands.
+FOR x = 0 TO 3
+    x(x) = mc(pc1) - x
+NEXT x
+FOR y = 0 TO 3
+    y(y) = mc(10) - y
+NEXT y
+pshc(1, 0) = (1 - x(0) / y(0)) * (1 - x(0) / y(1))
+pshc(1, 1) = 2 * pshc(1, 0)
+pshc(2, 0) = 2 * (1 - x(0) / y(0)) * (1 - x(0) / y(1)) * (1 - x(0) / y(2)) * x(0) / y(3)
+pshc(2, 1) = 3 * pshc(2, 0)
+pshc(3, 0) = 5 * (1 - x(0) / y(0)) * (1 - x(0) / y(1)) * x(0) / y(2) * x(1) / y(3)
+pshc(3, 1) = 3 * pshc(3, 0)
+pshc(3, 2) = pshc(3, 0) / 3
+pshc(4, 0) = 4 * (1 - x(0) / y(0)) * x(0) / y(1) * x(1) / y(2) * x(2) / y(3)
+pshc(4, 1) = 3 * pshc(4, 0)
+pshc(4, 2) = 2 * pshc(4, 0) / 3
+pshc(5, 0) = x(0) / y(0) * x(1) / y(1) * x(2) / y(2) * x(3) / y(3)
+pshc(5, 1) = 3 * pshc(5, 0)
+pshc(5, 2) = pshc(5, 0)
+FOR z = 1 TO 5
+    pshc(0, 1) = pshc(0, 1) + pshc(z, 1)
+    pshc(0, 2) = pshc(0, 2) + pshc(z, 2)
+NEXT z
+RETURN
+4343 ERASE pshc
+REM calculates average number of post-split-hands and average number of pairs
+REM that occur after the player finishes splitting pairs in a game wherein;
+REM the rules allow the player to split to a maximum of four post-split hands.
+FOR x = 0 TO 5
+    x(x) = mc(pc1) - x
+NEXT x
+FOR y = 0 TO 5
+    y(y) = mc(10) - y
+NEXT y
+pshc(1, 0) = (1 - x(0) / y(0)) * (1 - x(0) / y(1))
+pshc(1, 1) = 2 * pshc(1, 0)
+pshc(2, 0) = 2 * (1 - x(0) / y(0)) * (1 - x(0) / y(1)) * (1 - x(0) / y(2)) * x(0) / y(3)
+pshc(2, 1) = 3 * pshc(2, 0)
+pshc(3, 0) = 5 * (1 - x(0) / y(0)) * (1 - x(0) / y(1)) * (1 - x(0) / y(2))
+pshc(3, 0) = pshc(3, 0) * (1 - x(0) / y(3)) * x(0) / y(4) * x(1) / y(5)
+pshc(3, 1) = 4 * pshc(3, 0)
+pshc(4, 0) = 14 * (1 - x(0) / y(0)) * (1 - x(0) / y(1)) * (1 - x(0) / y(2))
+pshc(4, 0) = pshc(4, 0) * x(0) / y(3) * x(1) / y(4) * x(2) / y(5)
+pshc(4, 1) = 4 * pshc(4, 0)
+pshc(4, 2) = pshc(4, 0) * .25
+pshc(5, 0) = 14 * (1 - x(0) / y(0)) * (1 - x(0) / y(1)) * x(0) / y(2)
+pshc(5, 0) = pshc(5, 0) * x(1) / y(3) * x(2) / y(4) * x(3) / y(5)
+pshc(5, 1) = 4 * pshc(5, 0)
+pshc(5, 2) = pshc(5, 0) * .5
+pshc(6, 0) = 6 * (1 - x(0) / y(0)) * x(0) / y(1) * x(1) / y(2) * x(2) / y(3)
+pshc(6, 0) = phsc(6, 0) * x(3) / y(4) * x(4) / y(5)
+pshc(6, 1) = 4 * pshc(6, 0)
+pshc(6, 2) = pshc(6, 0) * .75
+pshc(7, 0) = x(0) / y(0) * x(1) / y(1) * x(2) / y(2) * x(3) / y(3) * x(4) / y(4) * x(5) / y(5)
+pshc(7, 1) = 4 * pshc(7, 1)
+pshc(7, 2) = pshc(7, 1)
+FOR z = 1 TO 7
+    pshc(0, 0) = pshc(0, 0) + pshc(z, 0)
+    pshc(0, 1) = pshc(0, 1) + pshc(z, 1)
+    pshc(0, 2) = pshc(0, 2) + pshc(z, 2)
+    REM PRINT pshc(0, 0); pshc(0, 1); pshc(0, 2): SLEEP 2
+NEXT z
 RETURN
 226 CLS: PRINT "BJ282.BAS asks the user to enter the folder/filename prefix"
 PRINT "of the files to be used to store application output."
@@ -782,7 +872,7 @@ PRINT #1, " "
 PRINT #1, "enter the folder/filename prefix of the files to be used":
 PRINT #1, "to store application output": PRINT #1, files$
 PRINT #1, " "
-PRINT #1, "press 'y' and enter for a standard deck composition";: PRINT #1, ans$
+PRINT #1, "press 'y' and enter for a standard deck composition ";: PRINT #1, ans$
 CLOSE #1
 pdenom(0) = 65: pdenom(1) = 50: pdenom(2) = 51: pdenom(3) = 52: pdenom(4) = 53: pdenom(5) = 54: pdenom(6) = 55
 pdenom(7) = 56: pdenom(8) = 57: pdenom(9) = 84: pdenom(10) = 74: pdenom(11) = 81: pdenom(12) = 75
@@ -878,49 +968,49 @@ REM PRINT "input lower limit of player response strategies considered for soft h
 REM PRINT "input upper limit of player response strategies considered for soft hands"; : INPUT su%
 PRINT "type and enter a brief description of rules": INPUT q$
 OPEN v$ FOR APPEND AS #1
-PRINT #1, "input the number of decks used";: PRINT #1, deck%
-PRINT #1, "what is the percentage of the shoe remaining at point of reshuffle.(15-100)";: PRINT #1, shf
-PRINT #1, "input dealer soft finish";: PRINT #1, j + 12
-PRINT #1, "press 1 and enter for dealer takes no hole card";: PRINT #1, hole%
-PRINT #1, "press 1 and enter for player hands of 21 push against all dealer bjs";: PRINT #1, push%
-IF push% = 1 THEN ten% = 1 ELSE PRINT #1, "press 1 and enter for player 21 pushes against dealer 10 up bjs only";: PRINT #1, ten%
-PRINT #1, "press 1 and enter for automatic six card player hand win";: PRINT #1, schw%
-PRINT #1, "press 1 and enter for insurance";: PRINT #1, ins%
-PRINT #1, "press 1 and enter for surrender";: PRINT #1, ls%
-IF ls% = 1 THEN PRINT #1, "press 1 and enter for early surrender";: PRINT #1, early%
-PRINT #1, "press 1 and enter for split option";: PRINT #1, splt%
+PRINT #1, "input the number of decks used ";: PRINT #1, deck%
+PRINT #1, "what is the percentage of the shoe remaining at point of reshuffle.(15-100) ";: PRINT #1, shf
+PRINT #1, "input dealer soft finish ";: PRINT #1, j + 12
+PRINT #1, "press 1 and enter for dealer takes no hole card ";: PRINT #1, hole%
+PRINT #1, "press 1 and enter for player hands of 21 push against all dealer bjs ";: PRINT #1, push%
+IF push% = 1 THEN ten% = 1 ELSE PRINT #1, "press 1 and enter for player 21 pushes against dealer 10 up bjs only ";: PRINT #1, ten%
+PRINT #1, "press 1 and enter for automatic six card player hand win ";: PRINT #1, schw%
+PRINT #1, "press 1 and enter for insurance ";: PRINT #1, ins%
+PRINT #1, "press 1 and enter for surrender ";: PRINT #1, ls%
+IF ls% = 1 THEN PRINT #1, "press 1 and enter for early surrender ";: PRINT #1, early%
+PRINT #1, "press 1 and enter for split option ";: PRINT #1, splt%
 IF splt% = 1 THEN
-    PRINT #1, "press 1 and enter for double down after split";: PRINT #1, das%
-    PRINT #1, "what is the maximum number of split hands allowed";: PRINT #1, most%
-    IF most% > 2 THEN PRINT #1, "press 1 and enter for resplit of aces is allowed";: PRINT #1, rsa%
+    PRINT #1, "press 1 and enter for double down after split ";: PRINT #1, das%
+    PRINT #1, "what is the maximum number of split hands allowed ";: PRINT #1, most%
+    IF most% > 2 THEN PRINT #1, "press 1 and enter for resplit of aces is allowed ";: PRINT #1, rsa%
 END IF
-PRINT #1, "press 1 and enter to restrict use of double down to specific hand totals";: PRINT #1, dh%
+PRINT #1, "press 1 and enter to restrict use of double down to specific hand totals ";: PRINT #1, dh%
 IF dh% = 1 THEN PRINT #1, "enter 9 for 9/10/11 only, enter 10 for 10/11 only, enter 11 for 11 only ";: PRINT #1, ld%
 IF NOT dh% = 1 THEN ld% = 1
-PRINT #1, "press 1 and enter to draw to split aces";: PRINT #1, dsa%
-PRINT #1, "input 2 for blackjack pays 2:1 or 1.5 for pays 3:2 or 1 for pays 1:1";: PRINT #1, blackjack
-PRINT #1, "press 1 and enter for blackjack pays off on split hands";: PRINT #1, bjsh%
-PRINT #1, "press 1 and enter for all player hands of 21 pay off immediately";: PRINT #1, immed%
-PRINT #1, "press 1 and enter for player blackjack beats dealer blackjack";: PRINT #1, pbd%
-PRINT #1, "press 1 and enter for bonus 21 payoffs";: PRINT #1, b21po%
+PRINT #1, "press 1 and enter to draw to split aces ";: PRINT #1, dsa%
+PRINT #1, "input 2 for blackjack pays 2:1 or 1.5 for pays 3:2 or 1 for pays 1:1 ";: PRINT #1, blackjack
+PRINT #1, "press 1 and enter for blackjack pays off on split hands ";: PRINT #1, bjsh%
+PRINT #1, "press 1 and enter for all player hands of 21 pay off immediately ";: PRINT #1, immed%
+PRINT #1, "press 1 and enter for player blackjack beats dealer blackjack ";: PRINT #1, pbd%
+PRINT #1, "press 1 and enter for bonus 21 payoffs ";: PRINT #1, b21po%
 IF b21po% = 1 THEN
     FOR x = 5 TO 7
-        PRINT #1, "enter payoff for"; x; " card 21";: PRINT #1, mc21po(x)
+        PRINT #1, "enter payoff for"; x; " card 21 ";: PRINT #1, mc21po(x)
     NEXT x
-    PRINT #1, "enter payoff for 678 mixed suits";: PRINT #1, ms678
-    PRINT #1, "enter payoff for 678 same suit";: PRINT #1, ss678
-    PRINT #1, "enter payoff for 678 spades suit";: PRINT #1, sp678
-    PRINT #1, "enter payoff for 777 mixed suits";: PRINT #1, ms777
+    PRINT #1, "enter payoff for 678 mixed suits ";: PRINT #1, ms678
+    PRINT #1, "enter payoff for 678 same suit ";: PRINT #1, ss678
+    PRINT #1, "enter payoff for 678 spades suit ";: PRINT #1, sp678
+    PRINT #1, "enter payoff for 777 mixed suits ";: PRINT #1, ms777
     IF deck% > 2 THEN
-        PRINT #1, "enter payoff for 777 same suit";: PRINT #1, ss777
-        PRINT #1, "enter payoff for 777 spades suit";: PRINT #1, sp777
-        PRINT #1, "enter jackpot for for 777 same suit against any dealer 7";: PRINT #1, jp777
+        PRINT #1, "enter payoff for 777 same suit ";: PRINT #1, ss777
+        PRINT #1, "enter payoff for 777 spades suit ";: PRINT #1, sp777
+        PRINT #1, "enter jackpot for for 777 same suit against any dealer 7 ";: PRINT #1, jp777
     END IF
 END IF
-PRINT #1, "input lower limit of player response strategies considered for hard hands";: PRINT #1, hl%
-PRINT #1, "input upper limit of player response strategies considered for hard hands";: PRINT #1, hu%
-PRINT #1, "input lower limit of player response strategies considered for soft hands";: PRINT #1, sl%
-PRINT #1, "input upper limit of player response strategies considered for soft hands";: PRINT #1, su%
+PRINT #1, "input lower limit of player response strategies considered for hard hands ";: PRINT #1, hl%
+PRINT #1, "input upper limit of player response strategies considered for hard hands ";: PRINT #1, hu%
+PRINT #1, "input lower limit of player response strategies considered for soft hands ";: PRINT #1, sl%
+PRINT #1, "input upper limit of player response strategies considered for soft hands ";: PRINT #1, su%
 PRINT #1, ""
 PRINT #1, "type and enter a brief description of rules": PRINT #1, q$
 PRINT #1, ""
@@ -966,7 +1056,8 @@ FOR k = 9 TO 0 STEP -1
                 END IF
                 hit(n, dc1) = q#: br(n, dc1) = 1: aq(n, dc1, 1) = q#: GOTO 333
             END IF
-            ERASE f: ERASE dbj
+            ERASE f
+            GOSUB 555
             FOR g = 12 TO 19
                 FOR h = 5 TO 8
                     IF h + 12 < g THEN h = g - 12
@@ -986,11 +1077,11 @@ FOR k = 9 TO 0 STEP -1
                         END IF
                     END IF
             NEXT h: NEXT g: I = 0
-            GOSUB 888: ERASE f: ERASE dbj
+            GOSUB 888: ERASE f
             IF dh% <> 1 THEN GOSUB 222
             IF dh% = 1 THEN IF (12 > pc1 + pc2 + 2 AND pc1 + pc2 + 2 > ld% - 1) THEN GOSUB 222
             IF ls% = 1 THEN GOSUB 234
-            ERASE f: ERASE dbj
+            ERASE f
             IF (pc1 <> pc2 OR splt% <> 1) THEN GOTO 333 ELSE split% = 1
             pc3 = pc2
             FOR pc2 = 9 TO 0 STEP -1
@@ -1006,6 +1097,7 @@ FOR k = 9 TO 0 STEP -1
                 IF mc(dc1) < 1 THEN mc(19) = mc(dc1) ELSE mc(19) = 1
                 IF mc(dc1) = 0 THEN GOTO 444 ELSE mc(dc1) = mc(dc1) - mc(19): mc(10) = mc(10) - mc(19)
                 mc0 = mc(0): mc9 = mc(9): mc10 = mc(10)
+                GOSUB 555
                 IF hole% <> 1 AND push% <> 1 AND dc1 = 0 THEN
                     FOR x = 0 TO 8
                         mc(x) = mc(x) * (mc(10) - mc(9) - 1) / (mc(10) - mc(9))
@@ -1016,21 +1108,36 @@ FOR k = 9 TO 0 STEP -1
                         mc(x) = mc(x) * (mc(10) - mc(0) - 1) / (mc(10) - mc(0))
                     NEXT x: mc(10) = mc(10) - 1
                 END IF
-                x = 2: y = mc(pc1) / mc(10): anh = 2
-                mc(11) = mc(pc1): mc(20) = mc(10)
+                IF most% = 2 THEN GOSUB 1111
+                IF most% = 3 THEN 
+                    IF mc(pc1) <> 0 OR rsa% = 1 THEN 
+                        GOSUB 1313
+                    END IF
+                    IF mc(pc1) = 0 AND rsa% <> 1 THEN
+                        GOSUB 1111
+                    END IF
+                END IF
+                IF most% > 3 THEN
+                    IF mc(pc1) <> 0 OR rsa% = 1 THEN 
+                        GOSUB 4343
+                    END IF
+                    IF mc(pc1) = 0 AND rsa% <> 1 THEN
+                        GOSUB 1111
+                    END IF
+                END IF                
+                mc(11) = mc(pc1): mc(20) = mc(10): x = 2
                 IF pc1 <> 0 OR rsa% = 1 THEN
                     DO WHILE x < most%
-                        anh = anh + y * x: x = x + 1
+                        x = x + 1
                         IF mc(11) = 0 THEN x = most%
                         IF mc(11) < 1 THEN mc(19) = mc(11) ELSE mc(19) = 1
                         mc(11) = mc(11) - mc(19): mc(20) = mc(20) - mc(19) - 1
-                        y = y * mc(11) / mc(20)
                     LOOP
                 END IF
                 IF mc(pc2) < 1 THEN mc(19) = mc(pc2) ELSE mc(19) = 1
                 IF mc(pc2) = 0 THEN GOTO 444
-                IF pc2 <> pc1 THEN prob# = mc(pc2) / mc(10) / (1 - mc(pc1) / mc(10) + y)
-                IF pc2 = pc1 THEN prob# = y / (1 - mc(pc1) / mc(10) + y)
+                IF pc2 <> pc1 THEN prob# = mc(pc2) / mc(10) / (1 - mc(pc1) / mc(10) + pshc(0, 2))
+                IF pc2 = pc1 THEN prob# = pshc(0, 2) / (1 - mc(pc1) / mc(10) + pshc(0, 2))
                 mc(pc2) = mc(pc2) - mc(19): mc(10) = mc(10) - mc(19)
                 probs# = probs# + prob#: splitprob(pc2) = prob#
                 FOR g = 12 TO 19
@@ -1066,23 +1173,22 @@ FOR k = 9 TO 0 STEP -1
                             END IF
                         END IF
                 NEXT h: NEXT g: I = 0
-                GOSUB 888: ERASE f: ERASE dbj
+                GOSUB 888: ERASE f
                 IF das% = 1 THEN
                     IF dsa% = 1 OR pc1 <> 0 THEN
                         IF dh% <> 1 THEN GOSUB 222
                         IF dh% = 1 THEN IF (12 > pc1 + pc2 + 2 AND pc1 + pc2 + 2 > ld% - 1) THEN GOSUB 222
                     END IF
                 END IF
-                ERASE f: ERASE dbj
-            444 NEXT pc2: pc2 = pc3: q# = 0: qdbj# = 0: IF pc1 <> 0 OR dsa% = 1 THEN mc(pc2) = mc(pc2) + mc(19): mc(10) = mc(10) + mc(19)
+                ERASE f
+            444 NEXT pc2: pc2 = pc3: q# = 0: IF pc1 <> 0 OR dsa% = 1 THEN mc(pc2) = mc(pc2) + mc(19): mc(10) = mc(10) + mc(19)
             IF pc1 <= pc2 THEN n = pc1 / 2 * (19 - pc1) + pc2 ELSE n = pc2 / 2 * (19 - pc2) + pc1
             FOR x = 0 TO 9
                 q# = q# + splithands(x, dc1) * splitprob(x)
-                qdbj# = qdbj# + splitdbj(x, dc1) * splitprob(x)
-            NEXT x
-            ERASE splithands: ERASE splitdbj: ERASE splitprob: probs# = 0
-            IF hole% <> 1 THEN q# = anh * q# + qdbj#
-            IF hole% = 1 THEN q# = anh * (q# + qdbj#)
+             NEXT x
+            ERASE splithands: ERASE splitprob: probs# = 0
+            IF hole% <> 1 THEN q# = pshc(0, 1) * q# - df(10)
+            IF hole% = 1 THEN q# = pshc(0, 1) * (q# - df(10))
             split = q#: aq(n, dc1, 30) = q#
             IF q# > hit(pc1 * (21 - pc1) / 2, dc1) THEN hit(pc1 * (21 - pc1) / 2, dc1) = q#: br(pc1 * (21 - pc1) / 2, dc1) = 30
             333 ERASE mc
@@ -1100,22 +1206,6 @@ FOR k = 9 TO 0 STEP -1
             IF ins% = 1 THEN IF dc1 = 0 THEN IF 3 * mc(9) / mc(10) > 1 THEN insur = 3 * mc(9) / mc(10) - 1 ELSE insur = 0
             hit(n, dc1) = hit(n, dc1) + insur
             GOSUB 555
-            FOR y = 0 TO 9
-            df(10) = df(10) + df(y): NEXT y
-            FOR y = 1 TO 4
-            df(5) = df(5) + df(5 + y): NEXT y
-            IF push% <> 1 THEN
-                IF dc1 = 0 THEN df(4) = df(4) - mc(9) / mc(10)
-                FOR x = 0 TO 5
-                    IF dc1 = 0 THEN df(x) = df(x) / (1 - mc(9) / mc(10))
-                NEXT x
-            END IF
-            IF ten% <> 1 THEN
-                IF dc1 = 9 THEN df(4) = df(4) - mc(0) / mc(10)
-                FOR x = 0 TO 5
-                    IF dc1 = 9 THEN df(x) = df(x) / (1 - mc(0) / mc(10))
-                NEXT x
-            END IF
             CLS
             PRINT "               player cards are"; pc1 + 1; "and"; pc2 + 1; "dealer card is"; dc1 + 1;
             PRINT "                  given the user input deck composition,"
@@ -1127,11 +1217,21 @@ FOR k = 9 TO 0 STEP -1
             FOR x = 1 TO 5
                 PRINT x + 16; "    ";
             NEXT x
-            PRINT " bust  "
-            account# = account# + df(10)
+            PRINT " bust  ";
+            IF dc1 = 0 OR dc1 = 9 THEN
+                PRINT "  AJ   ";
+            END IF
+            PRINT " "
+            account# = account# + df(11)
             PRINT USING "####"; dc1 + 1;
             FOR y = 0 TO 5
-                PRINT USING "####.###"; df(y) / (df(10) + 1E-08) * 100;
+                IF y = 5 THEN y = 12
+                PRINT USING "####.###"; df(y) / (df(11) + 1E-08) * 100;
+                IF y = 12 THEN
+                    IF dc1 = 0 OR dc1 = 9 THEN
+                        PRINT USING "####.###"; df(10) / (df(11) + 1E-08) * 100;
+                    END IF
+                END IF
             NEXT y: PRINT " "
             PRINT "total hands accounted for are ";: PRINT USING "###.###"; account# * 100;: PRINT "% of all possible"
             IF n = 9 THEN PRINT "blackjack yields a win minus loss expectation of";: PRINT USING "##.####"; hit(n, dc1)
@@ -1163,12 +1263,22 @@ FOR k = 9 TO 0 STEP -1
             FOR x = 1 TO 5
                 PRINT #1, x + 16; "    ";
             NEXT x
-            PRINT #1, " bust  "
-            account# = account# + df(10)
+            PRINT #1, " bust  ";
+            IF dc1 = 0 OR dc1 = 9 THEN
+                PRINT #1, "  AJ   ";
+            END IF
+            PRINT #1, " "
+            account# = account# + df(11)
             PRINT #1, USING "####"; dc1 + 1;
             FOR y = 0 TO 5
-                PRINT #1, USING "####.###"; df(y) / (df(10) + 1E-08) * 100;
-            NEXT y: PRINT #1, " "
+              IF y = 5 THEN y = 12
+              PRINT #1, USING "####.###"; df(y) / (df(11) + 1E-08) * 100;
+                IF y = 12 THEN
+                    IF dc1 = 0 OR dc1 = 9 THEN
+                        PRINT #1, USING "####.###"; df(10) / (df(11) + 1E-08) * 100;
+                    END IF
+                END IF
+             NEXT y: PRINT #1, " "
             PRINT #1, "total hands accounted for are ";: PRINT #1, USING "###.###"; account# * 100;: PRINT #1, "% of all possible"
             IF n = 9 THEN PRINT #1, "blackjack yields a win minus loss expectation of";: PRINT #1, USING "##.####"; hit(n, dc1)
             IF n <> 9 THEN
