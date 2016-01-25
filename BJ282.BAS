@@ -1338,7 +1338,7 @@ sd.bjsh = bjsh%: sd.deck = deck%: sd.shf = shf: sd.immed = immed%: sd.pbd = pbd%
 sd.b21po = b21po%: sd.ms777 = ms777: sd.ss777 = ss777: sd.sp777 = sp777: sd.jp777 = jp777
 sd.po5c21 = mc21po(4): sd.po6c21 = mc21po(5): sd.po7c21 = mc21po(6): sd.po8c21 = mc21po(7)
 sd.ms678 = ms678: sd.ss678 = ss678: sd.sp678 = sp678
-IF LEN(q$) > 80 THEN sd.description = MID$(q$, 1, 80) ELSE sd.description = t$
+IF LEN(q$) > 80 THEN sd.description = MID$(q$, 1, 80) ELSE sd.description = files$
 PUT #1, , sd
 CLOSE #1
 v$ = files$ + "b.dat"
