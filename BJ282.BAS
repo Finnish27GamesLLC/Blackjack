@@ -93,31 +93,31 @@ DIM dmult(14) AS INTEGER: DIM dp(14) AS DOUBLE: DIM duc(10): DIM f(29) AS DOUBLE
 DIM mc(40) AS DOUBLE: DIM df(12) AS DOUBLE: DIM mv(5) AS INTEGER: DIM puc(54): DIM mc21po(11) AS SINGLE
 DIM pc1 AS INTEGER: DIM pc2 AS INTEGER: DIM dc1 AS INTEGER: DIM pdenom(12) AS INTEGER: DIM pshc(7, 2) AS DOUBLE
 GOTO 226
-777 pmult(2) = pc1 * pc2: padd(2) = pc1 + pc2 + 2: pp(2) = 1: pp(0) = pp(2): padd(0) = padd(2)
+777 pmult(2) = pc1 * pc2: padd(2) = pc1 + pc2 + 2: pp(2) = 1: pp(0) = pp(2): pp(1) = pp(0) * (1 - df(10)): padd(0) = padd(2)
 IF pmult(2) = 0 AND padd(2) > h + 1 THEN padd(0) = padd(0) + 10
 IF padd(0) > g - 1 AND dd% = 0 THEN
-    IF padd(0) = 21 AND bjsh% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10)) * blackjack: GOTO 18
-    IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10)): GOTO 18
-    IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10)): GOTO 18
+    IF padd(0) = 21 AND bjsh% = 1 THEN f(I) = f(I) + pp(1) * blackjack: GOTO 18
+    IF padd(0) > 21 THEN f(I) = f(I) - pp(1): GOTO 18
+    IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(1): GOTO 18
     GOSUB 666: GOTO 18
 END IF
 IF nodsa% = 1 THEN
-    IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10)): GOTO 18
+    IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(1): GOTO 18
     GOSUB 666: GOTO 18
 END IF
 FOR s = 0 TO 9 STEP 1
-    pmult(3) = pmult(2) * s: padd(3) = padd(2) + s + 1: padd(0) = padd(3)
+    pmult(3) = pmult(2) * s: padd(3) = padd(2) + s + 1: padd(0) = padd(3) 
     IF mc(s) < 1 THEN mc(14) = mc(s) ELSE mc(14) = 1
-    IF mc(s) = 0 THEN GOTO 19 ELSE pp(3) = pp(2) * mc(s) / mc(10): pp(0) = pp(3): mc(s) = mc(s) - mc(14): mc(10) = mc(10) - mc(14)
+    IF mc(s) = 0 THEN GOTO 19 ELSE pp(3) = pp(2) * mc(s) / mc(10): pp(0) = pp(3): pp(1) = pp(0) * (1 - df(10)): mc(s) = mc(s) - mc(14): mc(10) = mc(10) - mc(14)
     IF b21po% = 1 THEN
         IF padd(3) = 18 THEN
             IF pc1 = 6 AND pc2 = 6 THEN
                 IF dc1 = 6 THEN po777 = mc21po(1) + mc21po(11) ELSE po777 = mc21po(1) + mc21po(2) + mc21po(3)
-                IF po777 <> 0 THEN pp(0) = pp(3) * po777: f(I) = f(I) + pp(0) * (1 - df(10)): mc(s) = mc(s) + mc(14): mc(10) = mc(10) + mc(14): GOTO 19
+                IF po777 <> 0 THEN pp(0) = pp(3) * po777: f(I) = f(I) + pp(1): mc(s) = mc(s) + mc(14): mc(10) = mc(10) + mc(14): GOTO 19
             END IF
-            IF pc1 = 5 THEN IF pc2 = 6 OR pc2 = 7 THEN po678 = mc21po(8) + mc21po(9) + mc21po(10): IF po678 <> 0 THEN pp(0) = pp(3) * po678: f(I) = f(I) + pp(0) * (1 - df(10)): mc(s) = mc(s) + mc(14): mc(10) = mc(10) + mc(14): GOTO 19
-            IF pc1 = 6 THEN IF pc2 = 5 OR pc2 = 7 THEN po678 = mc21po(8) + mc21po(9) + mc21po(10): IF po678 <> 0 THEN pp(0) = pp(3) * po678: f(I) = f(I) + pp(0) * (1 - df(10)): mc(s) = mc(s) + mc(14): mc(10) = mc(10) + mc(14): GOTO 19
-            IF pc1 = 7 THEN IF pc2 = 5 OR pc2 = 6 THEN po678 = mc21po(8) + mc21po(9) + mc21po(10): IF po678 <> 0 THEN pp(0) = pp(3) * po678: f(I) = f(I) + pp(0) * (1 - df(10)): mc(s) = mc(s) + mc(14): mc(10) = mc(10) + mc(14): GOTO 19
+            IF pc1 = 5 THEN IF pc2 = 6 OR pc2 = 7 THEN po678 = mc21po(8) + mc21po(9) + mc21po(10): IF po678 <> 0 THEN pp(0) = pp(3) * po678: f(I) = f(I) + pp(1): mc(s) = mc(s) + mc(14): mc(10) = mc(10) + mc(14): GOTO 19
+            IF pc1 = 6 THEN IF pc2 = 5 OR pc2 = 7 THEN po678 = mc21po(8) + mc21po(9) + mc21po(10): IF po678 <> 0 THEN pp(0) = pp(3) * po678: f(I) = f(I) + pp(1): mc(s) = mc(s) + mc(14): mc(10) = mc(10) + mc(14): GOTO 19
+            IF pc1 = 7 THEN IF pc2 = 5 OR pc2 = 6 THEN po678 = mc21po(8) + mc21po(9) + mc21po(10): IF po678 <> 0 THEN pp(0) = pp(3) * po678: f(I) = f(I) + pp(1): mc(s) = mc(s) + mc(14): mc(10) = mc(10) + mc(14): GOTO 19
         END IF
     END IF
     IF pmult(3) = 0 THEN
@@ -125,8 +125,8 @@ FOR s = 0 TO 9 STEP 1
         IF padd(3) < h + 2 AND dd% = 1 THEN padd(0) = padd(0) + 10
     END IF
     IF padd(0) > g - 1 OR dd% = 1 THEN
-        IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10))
-        IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10))
+        IF padd(0) > 21 THEN f(I) = f(I) - pp(1)
+        IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(1)
         IF padd(0) = 21 AND immed% <> 1 THEN GOSUB 666
         IF padd(0) < 21 THEN GOSUB 666
         mc(s) = mc(s) + mc(14): mc(10) = mc(10) + mc(14): GOTO 19
@@ -134,11 +134,11 @@ FOR s = 0 TO 9 STEP 1
     FOR t = 0 TO 9 STEP 1
         pmult(4) = pmult(3) * t: padd(4) = padd(3) + t + 1: padd(0) = padd(4)
         IF mc(t) < 1 THEN mc(15) = mc(t) ELSE mc(15) = 1
-        IF mc(t) = 0 THEN GOTO 20 ELSE pp(4) = pp(3) * mc(t) / mc(10): pp(0) = pp(4): mc(t) = mc(t) - mc(15): mc(10) = mc(10) - mc(15)
+        IF mc(t) = 0 THEN GOTO 20 ELSE pp(4) = pp(3) * mc(t) / mc(10): pp(0) = pp(4): pp(1) = pp(0) * (1 - df(10)): mc(t) = mc(t) - mc(15): mc(10) = mc(10) - mc(15)
         IF pmult(4) = 0 AND padd(4) > h + 1 AND padd(4) < 12 THEN padd(0) = padd(0) + 10
         IF padd(0) > g - 1 THEN
-            IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10))
-            IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10))
+            IF padd(0) > 21 THEN f(I) = f(I) - pp(1)
+            IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(1)
             IF padd(0) = 21 AND immed% <> 1 THEN GOSUB 666
             IF padd(0) < 21 THEN GOSUB 666
             mc(t) = mc(t) + mc(15): mc(10) = mc(10) + mc(15): GOTO 20
@@ -146,12 +146,12 @@ FOR s = 0 TO 9 STEP 1
         FOR u = 0 TO 9 STEP 1
             pmult(5) = pmult(4) * u: padd(5) = padd(4) + u + 1: padd(0) = padd(5)
             IF mc(u) < 1 THEN mc(16) = mc(u) ELSE mc(16) = 1
-            IF mc(u) = 0 THEN GOTO 21 ELSE pp(5) = pp(4) * mc(u) / mc(10): pp(0) = pp(5): mc(u) = mc(u) - mc(16): mc(10) = mc(10) - mc(16)
+            IF mc(u) = 0 THEN GOTO 21 ELSE pp(5) = pp(4) * mc(u) / mc(10): pp(0) = pp(5): pp(1) = pp(0) * (1 - df(10)): mc(u) = mc(u) - mc(16): mc(10) = mc(10) - mc(16)
             IF pmult(5) = 0 AND padd(5) > h + 1 AND padd(5) < 12 THEN padd(0) = padd(0) + 10
             IF padd(5) > g - 1 THEN
-                IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(4) <> 0 THEN pp(0) = pp(0) * mc21po(4): f(I) = f(I) + pp(0) * (1 - df(10)): mc(u) = mc(u) + mc(16): mc(10) = mc(10) + mc(16): GOTO 21
-                IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10))
-                IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10))
+                IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(4) <> 0 THEN pp(1) = pp(1) * mc21po(4): f(I) = f(I) + pp(1): mc(u) = mc(u) + mc(16): mc(10) = mc(10) + mc(16): GOTO 21
+                IF padd(0) > 21 THEN f(I) = f(I) - pp(1)
+                IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(1)
                 IF padd(0) = 21 AND immed% <> 1 THEN GOSUB 666
                 IF padd(0) < 21 THEN GOSUB 666
                 mc(u) = mc(u) + mc(16): mc(10) = mc(10) + mc(16): GOTO 21
@@ -159,29 +159,29 @@ FOR s = 0 TO 9 STEP 1
             FOR v = 0 TO 9 STEP 1
                 pmult(6) = pmult(5) * v: padd(6) = padd(5) + v + 1: padd(0) = padd(6)
                 IF mc(v) < 1 THEN mc(17) = mc(v) ELSE mc(17) = 1
-                IF mc(v) = 0 THEN GOTO 22 ELSE pp(6) = pp(5) * mc(v) / mc(10): pp(0) = pp(6): mc(v) = mc(v) - mc(17): mc(10) = mc(10) - mc(17)
+                IF mc(v) = 0 THEN GOTO 22 ELSE pp(6) = pp(5) * mc(v) / mc(10): pp(0) = pp(6): pp(1) = pp(0) * (1 - df(10)): mc(v) = mc(v) - mc(17): mc(10) = mc(10) - mc(17)
                 IF pmult(6) = 0 AND padd(6) > h + 1 AND padd(6) < 10 THEN padd(0) = padd(0) + 10
                 IF padd(0) > g - 1 THEN
-                    IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(5) <> 0 THEN pp(0) = pp(0) * mc21po(5): f(I) = f(I) + pp(0) * (1 - df(10)): mc(v) = mc(v) + mc(17): mc(10) = mc(10) + mc(17): GOTO 22
-                    IF schw% = 1 THEN IF padd(6) < 22 THEN f(I) = f(I) + pp(0) * (1 - df(10)): mc(v) = mc(v) + mc(17): mc(10) = mc(10) + mc(17): GOTO 22
-                    IF schw% = 1 THEN IF padd(6) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10)): mc(v) = mc(v) + mc(17): mc(10) = mc(10) + mc(17): GOTO 22
-                    IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10))
-                    IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10))
+                    IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(5) <> 0 THEN pp(1) = pp(1) * mc21po(5): f(I) = f(I) + pp(1): mc(v) = mc(v) + mc(17): mc(10) = mc(10) + mc(17): GOTO 22
+                    IF schw% = 1 THEN IF padd(6) < 22 THEN f(I) = f(I) + pp(1): mc(v) = mc(v) + mc(17): mc(10) = mc(10) + mc(17): GOTO 22
+                    IF schw% = 1 THEN IF padd(6) > 21 THEN f(I) = f(I) - pp(1): mc(v) = mc(v) + mc(17): mc(10) = mc(10) + mc(17): GOTO 22
+                    IF padd(0) > 21 THEN f(I) = f(I) - pp(1)
+                    IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(1)
                     IF padd(0) = 21 AND immed% <> 1 THEN GOSUB 666
                     IF padd(0) < 21 THEN GOSUB 666
                     mc(v) = mc(v) + mc(17): mc(10) = mc(10) + mc(17): GOTO 22
                 END IF
-                IF schw% = 1 THEN IF padd(6) < 22 THEN f(I) = f(I) + pp(0) * (1 - df(10)): mc(v) = mc(v) + mc(17): mc(10) = mc(10) + mc(17): GOTO 22
-                IF schw% = 1 THEN IF padd(6) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10)): mc(v) = mc(v) + mc(17): mc(10) = mc(10) + mc(17): GOTO 22
+                IF schw% = 1 THEN IF padd(6) < 22 THEN f(I) = f(I) + pp(1): mc(v) = mc(v) + mc(17): mc(10) = mc(10) + mc(17): GOTO 22
+                IF schw% = 1 THEN IF padd(6) > 21 THEN f(I) = f(I) - pp(1): mc(v) = mc(v) + mc(17): mc(10) = mc(10) + mc(17): GOTO 22
                 FOR w = 0 TO 9 STEP 1
                     pmult(7) = pmult(6) * w: padd(7) = padd(6) + w + 1: padd(0) = padd(7)
                     IF mc(w) < 1 THEN mc(12) = mc(w) ELSE mc(12) = 1
-                    IF mc(w) = 0 THEN GOTO 23 ELSE pp(7) = pp(6) * mc(w) / mc(10): pp(0) = pp(7): mc(w) = mc(w) - mc(12): mc(10) = mc(10) - mc(12)
+                    IF mc(w) = 0 THEN GOTO 23 ELSE pp(7) = pp(6) * mc(w) / mc(10): pp(0) = pp(7): pp(1) = pp(0) * (1 - df(10)): mc(w) = mc(w) - mc(12): mc(10) = mc(10) - mc(12)
                     IF pmult(7) = 0 AND padd(7) > h + 1 AND padd(7) < 12 THEN padd(0) = padd(0) + 10
                     IF padd(0) > g - 1 THEN
-                        IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(6) <> 0 THEN pp(0) = pp(0) * mc21po(6): f(I) = f(I) + pp(0) * (1 - df(10)): mc(w) = mc(w) + mc(12): mc(10) = mc(10) + mc(12): GOTO 23
-                        IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10))
-                        IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10))
+                        IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(6) <> 0 THEN pp(1) = pp(1) * mc21po(6): f(I) = f(I) + pp(1): mc(w) = mc(w) + mc(12): mc(10) = mc(10) + mc(12): GOTO 23
+                        IF padd(0) > 21 THEN f(I) = f(I) - pp(1)
+                        IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(1)
                         IF padd(0) = 21 AND immed% <> 1 THEN GOSUB 666
                         IF padd(0) < 21 THEN GOSUB 666
                         mc(w) = mc(w) + mc(12): mc(10) = mc(10) + mc(12): GOTO 23
@@ -189,12 +189,12 @@ FOR s = 0 TO 9 STEP 1
                     FOR o = 0 TO 9 STEP 1
                         pmult(8) = pmult(7) * o: padd(8) = padd(7) + o + 1: padd(0) = padd(8)
                         IF mc(o) < 1 THEN mc(18) = mc(o) ELSE mc(18) = 1
-                        IF mc(o) = 0 THEN GOTO 24 ELSE pp(8) = pp(7) * mc(o) / mc(10): pp(0) = pp(8): mc(o) = mc(o) - mc(18): mc(10) = mc(10) - mc(18)
+                        IF mc(o) = 0 THEN GOTO 24 ELSE pp(8) = pp(7) * mc(o) / mc(10): pp(0) = pp(8): pp(1) = pp(0) * (1 - df(10)): mc(o) = mc(o) - mc(18): mc(10) = mc(10) - mc(18)
                         IF pmult(8) = 0 AND padd(8) > h + 1 AND padd(8) < 12 THEN padd(0) = padd(0) + 10
                         IF padd(0) > g - 1 THEN
-                            IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(0) = pp(0) * mc21po(7): f(I) = f(I) + pp(0) * (1 - df(10)): mc(o) = mc(o) + mc(18): mc(10) = mc(10) + mc(18): GOTO 24
-                            IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10))
-                            IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10))
+                            IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(1) = pp(1) * mc21po(7): f(I) = f(I) + pp(1): mc(o) = mc(o) + mc(18): mc(10) = mc(10) + mc(18): GOTO 24
+                            IF padd(0) > 21 THEN f(I) = f(I) - pp(1)
+                            IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(1)
                             IF padd(0) = 21 AND immed% <> 1 THEN GOSUB 666
                             IF padd(0) < 21 THEN GOSUB 666
                             mc(o) = mc(o) + mc(18): mc(10) = mc(10) + mc(18): GOTO 24
@@ -202,12 +202,12 @@ FOR s = 0 TO 9 STEP 1
                         FOR aa = 0 TO 9 STEP 1
                             pmult(9) = pmult(8) * aa: padd(9) = padd(8) + aa + 1: padd(0) = padd(9)
                             IF mc(aa) < 1 THEN mc(22) = mc(aa) ELSE mc(22) = 1
-                            IF mc(aa) = 0 THEN GOTO 25 ELSE pp(9) = pp(8) * mc(aa) / mc(10): pp(0) = pp(9): pp(0) = pp(0) * (1 - df(10)): mc(aa) = mc(aa) - mc(22): mc(10) = mc(10) - mc(22)
+                            IF mc(aa) = 0 THEN GOTO 25 ELSE pp(9) = pp(8) * mc(aa) / mc(10): pp(0) = pp(9): pp(1) = pp(0) * (1 - df(10)): pp(0) = pp(1): mc(aa) = mc(aa) - mc(22): mc(10) = mc(10) - mc(22)
                             IF pmult(9) = 0 AND padd(9) > h + 1 AND padd(9) < 12 THEN padd(0) = padd(0) + 10
                             IF padd(0) > g - 1 THEN
-                                IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(0) = pp(0) * mc21po(7): f(I) = f(I) + pp(0) * (1 - df(10)): mc(aa) = mc(aa) + mc(22): mc(10) = mc(10) + mc(22): GOTO 25
-                                IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10))
-                                IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10))
+                                IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(1) = pp(1) * mc21po(7): f(I) = f(I) + pp(1): mc(aa) = mc(aa) + mc(22): mc(10) = mc(10) + mc(22): GOTO 25
+                                IF padd(0) > 21 THEN f(I) = f(I) - pp(1)
+                                IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(1)
                                 IF padd(0) = 21 AND immed% <> 1 THEN GOSUB 666
                                 IF padd(0) < 21 THEN GOSUB 666
                                 mc(aa) = mc(aa) + mc(22): mc(10) = mc(10) + mc(22): GOTO 25
@@ -215,12 +215,12 @@ FOR s = 0 TO 9 STEP 1
                             FOR ab = 0 TO 9 STEP 1
                                 pmult(10) = pmult(9) * ab: padd(10) = padd(9) + ab + 1: padd(0) = padd(10)
                                 IF mc(ab) < 1 THEN mc(23) = mc(ab) ELSE mc(23) = 1
-                                IF mc(ab) = 0 THEN GOTO 26 ELSE pp(10) = pp(9) * mc(ab) / mc(10): pp(0) = pp(10): mc(ab) = mc(ab) - mc(23): mc(10) = mc(10) - mc(23)
+                                IF mc(ab) = 0 THEN GOTO 26 ELSE pp(10) = pp(9) * mc(ab) / mc(10): pp(0) = pp(10): pp(1) = pp(0) * (1 - df(10)): mc(ab) = mc(ab) - mc(23): mc(10) = mc(10) - mc(23)
                                 IF pmult(10) = 0 AND padd(10) > h + 1 AND padd(10) < 12 THEN padd(0) = padd(0) + 10
                                 IF padd(0) > g - 1 THEN
-                                    IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(0) = pp(0) * mc21po(7): f(I) = f(I) + pp(0) * (1 - df(10)): mc(ab) = mc(ab) + mc(23): mc(10) = mc(10) + mc(23): GOTO 26
-                                    IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10))
-                                    IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10))
+                                    IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(1) = pp(1) * mc21po(7): f(I) = f(I) + pp(1): mc(ab) = mc(ab) + mc(23): mc(10) = mc(10) + mc(23): GOTO 26
+                                    IF padd(0) > 21 THEN f(I) = f(I) - pp(1)
+                                    IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(1)
                                     IF padd(0) = 21 AND immed% <> 1 THEN GOSUB 666
                                     IF padd(0) < 21 THEN GOSUB 666
                                     mc(ab) = mc(ab) + mc(23): mc(10) = mc(10) + mc(23): GOTO 26
@@ -228,12 +228,12 @@ FOR s = 0 TO 9 STEP 1
                                 FOR ac = 0 TO 9 STEP 1
                                     pmult(11) = pmult(10) * ac: padd(11) = padd(10) + ac + 1: padd(0) = padd(11)
                                     IF mc(ac) < 1 THEN mc(24) = mc(ac) ELSE mc(24) = 1
-                                    IF mc(ac) = 0 THEN GOTO 27 ELSE pp(11) = pp(10) * mc(ac) / mc(10): pp(0) = pp(11): mc(ac) = mc(ac) - mc(24): mc(10) = mc(10) - mc(24)
+                                    IF mc(ac) = 0 THEN GOTO 27 ELSE pp(11) = pp(10) * mc(ac) / mc(10): pp(0) = pp(11): pp(1) = pp(0) * (1 - df(10)): mc(ac) = mc(ac) - mc(24): mc(10) = mc(10) - mc(24)
                                     IF pmult(11) = 0 AND padd(11) > h + 1 AND padd(11) < 12 THEN padd(0) = padd(0) + 10
                                     IF padd(0) > g - 1 THEN
-                                        IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(0) = pp(0) * mc21po(7): f(I) = f(I) + pp(0) * (1 - df(10)): mc(ac) = mc(ac) + mc(24): mc(10) = mc(10) + mc(24): GOTO 27
-                                        IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10))
-                                        IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10))
+                                        IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(1) = pp(1) * mc21po(7): f(I) = f(I) + pp(1): mc(ac) = mc(ac) + mc(24): mc(10) = mc(10) + mc(24): GOTO 27
+                                        IF padd(0) > 21 THEN f(I) = f(I) - pp(1)
+                                        IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(1)
                                         IF padd(0) = 21 AND immed% <> 1 THEN GOSUB 666
                                         IF padd(0) < 21 THEN GOSUB 666
                                         mc(ac) = mc(ac) + mc(24): mc(10) = mc(10) + mc(24): GOTO 27
@@ -241,11 +241,11 @@ FOR s = 0 TO 9 STEP 1
                                     FOR ad = 0 TO 9 STEP 1
                                         pmult(12) = pmult(11) * ad: padd(12) = padd(11) + ad + 1: padd(0) = padd(12)
                                         IF mc(ad) < 1 THEN mc(28) = mc(ad) ELSE mc(28) = 1
-                                        IF mc(ad) = 0 THEN GOTO 15 ELSE pp(12) = pp(11) * mc(ad) / mc(10): pp(0) = pp(12): mc(ad) = mc(ad) - mc(28): mc(10) = mc(10) - mc(28)
+                                        IF mc(ad) = 0 THEN GOTO 15 ELSE pp(12) = pp(11) * mc(ad) / mc(10): pp(0) = pp(12): pp(1) = pp(0) * (1 - df(10)): mc(ad) = mc(ad) - mc(28): mc(10) = mc(10) - mc(28)
                                         IF padd(0) > g - 1 THEN
-                                            IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(0) = pp(0) * mc21po(7): f(I) = f(I) + pp(0) * (1 - df(10)): mc(ad) = mc(ad) + mc(28): mc(10) = mc(10) + mc(28): GOTO 15
-                                            IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10))
-                                            IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10))
+                                            IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(1) = pp(1) * mc21po(7): f(I) = f(I) + pp(1): mc(ad) = mc(ad) + mc(28): mc(10) = mc(10) + mc(28): GOTO 15
+                                            IF padd(0) > 21 THEN f(I) = f(I) - pp(1)
+                                            IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(1)
                                             IF padd(0) = 21 AND immed% <> 1 THEN GOSUB 666
                                             IF padd(0) < 21 THEN GOSUB 666
                                             mc(ad) = mc(ad) + mc(28): mc(10) = mc(10) + mc(28): GOTO 15
@@ -253,11 +253,11 @@ FOR s = 0 TO 9 STEP 1
                                         FOR ae = 0 TO 9 STEP 1
                                             pmult(13) = pmult(12) * ae: padd(13) = padd(12) + ae + 1: padd(0) = padd(13)
                                             IF mc(ae) < 1 THEN mc(29) = mc(ae) ELSE mc(29) = 1
-                                            IF mc(ae) = 0 THEN GOTO 16 ELSE pp(13) = pp(12) * mc(ae) / mc(10): pp(0) = pp(13): mc(ae) = mc(ae) - mc(29): mc(10) = mc(10) - mc(29)
+                                            IF mc(ae) = 0 THEN GOTO 16 ELSE pp(13) = pp(12) * mc(ae) / mc(10): pp(0) = pp(13): pp(1) = pp(0) * (1 - df(10)): mc(ae) = mc(ae) - mc(29): mc(10) = mc(10) - mc(29)
                                             IF padd(13) > g - 1 THEN
-                                                IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(0) = pp(0) * mc21po(7): f(I) = f(I) + pp(0) * (1 - df(10)): mc(ae) = mc(ae) + mc(29): mc(10) = mc(10) + mc(29): GOTO 16
-                                                IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10))
-                                                IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10))
+                                                IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(1) = pp(1) * mc21po(7): f(I) = f(I) + pp(1): mc(ae) = mc(ae) + mc(29): mc(10) = mc(10) + mc(29): GOTO 16
+                                                IF padd(0) > 21 THEN f(I) = f(I) - pp(1)
+                                                IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(1)
                                                 IF padd(0) = 21 AND immed% <> 1 THEN GOSUB 666
                                                 IF padd(0) < 21 THEN GOSUB 666
                                                 mc(ae) = mc(ae) + mc(29): mc(10) = mc(10) + mc(29): GOTO 16
@@ -265,11 +265,11 @@ FOR s = 0 TO 9 STEP 1
                                             FOR af = 0 TO 9 STEP 1
                                                 pmult(14) = pmult(13) * af: padd(14) = padd(13) + af + 1: padd(0) = padd(14)
                                                 IF mc(af) < 1 THEN mc(30) = mc(af) ELSE mc(30) = 1
-                                                IF mc(af) = 0 THEN GOTO 17 ELSE pp(14) = pp(13) * mc(af) / mc(10): pp(0) = pp(14): mc(af) = mc(af) - mc(30): mc(10) = mc(10) - mc(30)
+                                                IF mc(af) = 0 THEN GOTO 17 ELSE pp(14) = pp(13) * mc(af) / mc(10): pp(0) = pp(14): pp(1) = pp(0) * (1 - df(10)): mc(af) = mc(af) - mc(30): mc(10) = mc(10) - mc(30)
                                                 IF padd(14) > g - 15 THEN
-                                                    IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(0) = pp(0) * mc21po(7): f(I) = f(I) + pp(0) * (1 - df(10)): mc(af) = mc(af) + mc(30): mc(10) = mc(10) + mc(30): GOTO 17
-                                                    IF padd(0) > 21 THEN f(I) = f(I) - pp(0) * (1 - df(10))
-                                                    IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(0) * (1 - df(10))
+                                                    IF b21po% = 1 AND padd(0) = 21 THEN IF mc21po(7) <> 0 THEN pp(1) = pp(1) * mc21po(7): f(I) = f(I) + pp(1): mc(af) = mc(af) + mc(30): mc(10) = mc(10) + mc(30): GOTO 17
+                                                    IF padd(0) > 21 THEN f(I) = f(I) - pp(1)
+                                                    IF padd(0) = 21 AND immed% = 1 THEN f(I) = f(I) + pp(1)
                                                     IF padd(0) = 21 AND immed% <> 1 THEN GOSUB 666
                                                     IF padd(0) < 21 THEN GOSUB 666
                                                     mc(af) = mc(af) + mc(30): mc(10) = mc(10) + mc(30): GOTO 17
@@ -1110,18 +1110,18 @@ FOR k = 9 TO 0 STEP -1
                 END IF
                 IF most% = 2 THEN GOSUB 1111
                 IF most% = 3 THEN 
-                    IF mc(pc1) <> 0 OR rsa% = 1 THEN 
+                    IF pc1 <> 0 OR rsa% = 1 THEN 
                         GOSUB 1313
                     END IF
-                    IF mc(pc1) = 0 AND rsa% <> 1 THEN
+                    IF pc1 = 0 AND rsa% <> 1 THEN
                         GOSUB 1111
                     END IF
                 END IF
                 IF most% > 3 THEN
-                    IF mc(pc1) <> 0 OR rsa% = 1 THEN 
+                    IF pc1 <> 0 OR rsa% = 1 THEN 
                         GOSUB 4343
                     END IF
-                    IF mc(pc1) = 0 AND rsa% <> 1 THEN
+                    IF pc1 = 0 AND rsa% <> 1 THEN
                         GOSUB 1111
                     END IF
                 END IF                
