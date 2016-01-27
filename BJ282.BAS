@@ -1125,21 +1125,12 @@ FOR k = 9 TO 0 STEP -1
                         GOSUB 1111
                     END IF
                 END IF                
-                mc(11) = mc(pc1): mc(20) = mc(10): x = 2
-                IF pc1 <> 0 OR rsa% = 1 THEN
-                    DO WHILE x < most%
-                        x = x + 1
-                        IF mc(11) = 0 THEN x = most%
-                        IF mc(11) < 1 THEN mc(19) = mc(11) ELSE mc(19) = 1
-                        mc(11) = mc(11) - mc(19): mc(20) = mc(20) - mc(19) - 1
-                    LOOP
-                END IF
-                IF mc(pc2) < 1 THEN mc(19) = mc(pc2) ELSE mc(19) = 1
-                IF mc(pc2) = 0 THEN GOTO 444
                 IF pc2 <> pc1 THEN prob# = mc(pc2) / mc(10) / (1 - mc(pc1) / mc(10) + pshc(0, 2))
                 IF pc2 = pc1 THEN prob# = pshc(0, 2) / (1 - mc(pc1) / mc(10) + pshc(0, 2))
-                mc(pc2) = mc(pc2) - mc(19): mc(10) = mc(10) - mc(19)
                 probs# = probs# + prob#: splitprob(pc2) = prob#
+                IF mc(pc2) < 1 THEN mc(19) = mc(pc2) ELSE mc(19) = 1
+                IF mc(pc2) = 0 THEN GOTO 444
+                mc(pc2) = mc(pc2) - mc(19): mc(10) = mc(10) - mc(19)
                 FOR g = 12 TO 19
                     FOR h = 5 TO 8
                         IF h + 12 < g THEN h = g - 12
