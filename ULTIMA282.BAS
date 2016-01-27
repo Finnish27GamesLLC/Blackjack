@@ -501,9 +501,9 @@ END IF
 IF split% = 1 THEN
     IF hole% <> 1 THEN q = 2 * q
     IF hole% = 1 THEN q = 2 * (q - df(10))
-    IF pc1 > pc2 THEN IF q * prob > splithands(pc2, dc1) THEN splithands(pc2, dc1) = q * prob: far(n, dc1) = 32
-    IF pc2 = pc1 THEN IF q * prob > splithands(pc2, dc1) THEN splithands(pc2, dc1) = q * prob: far(n, dc1) = 32: sar(n, dc1) = 32
-    IF pc2 > pc1 THEN IF q * prob > splithands(pc2, dc1) THEN splithands(pc2, dc1) = q * prob: sar(n, dc1) = 32
+    IF pc1 > pc2 THEN IF q > splithands(pc2, dc1) THEN splithands(pc2, dc1) = q: far(n, dc1) = 32
+    IF pc2 = pc1 THEN IF q > splithands(pc2, dc1) THEN splithands(pc2, dc1) = q: far(n, dc1) = 32: sar(n, dc1) = 32
+    IF pc2 > pc1 THEN IF q > splithands(pc2, dc1) THEN splithands(pc2, dc1) = q: sar(n, dc1) = 32
 END IF
 RETURN
 234 IF (split% <> 1 AND ls% = 1) THEN
@@ -654,7 +654,6 @@ PRINT #1, " "
 PRINT #1, "enter the folder/filename prefix of the files to be used":
 PRINT #1, "to store application output ";: PRINT #1, files$
 PRINT #1, " "
-PRINT #1, "press 'y' and enter for a standard deck composition ";: PRINT #1, ans$
 CLOSE #1
 pdenom(0) = 65: pdenom(1) = 50: pdenom(2) = 51: pdenom(3) = 52: pdenom(4) = 53: pdenom(5) = 54: pdenom(6) = 55
 pdenom(7) = 56: pdenom(8) = 57: pdenom(9) = 84: pdenom(10) = 74: pdenom(11) = 81: pdenom(12) = 75
@@ -965,37 +964,28 @@ FOR k = 9 TO 0 STEP -1
                 END IF
                 IF most% = 2 THEN GOSUB 1111
                 IF most% = 3 THEN 
-                    IF mc(pc1) <> 0 OR rsa% = 1 THEN 
+                    IF pc1 <> 0 OR rsa% = 1 THEN 
                         GOSUB 1313
                     END IF
-                    IF mc(pc1) = 0 AND rsa% <> 1 THEN
+                    IF pc1 = 0 AND rsa% <> 1 THEN
                         GOSUB 1111
                     END IF
                 END IF
                 IF most% > 3 THEN
-                    IF mc(pc1) <> 0 OR rsa% = 1 THEN 
+                    IF pc1 <> 0 OR rsa% = 1 THEN 
                         GOSUB 4343
                     END IF
-                    IF mc(pc1) = 0 AND rsa% <> 1 THEN
+                    IF pc1 = 0 AND rsa% <> 1 THEN
                         GOSUB 1111
                     END IF
                 END IF                
-                mc(11) = mc(pc1): mc(20) = mc(10): x = 2
-                IF pc1 <> 0 OR rsa% = 1 THEN
-                    DO WHILE x < most%
-                        x = x + 1
-                        IF mc(11) = 0 THEN x = most%
-                        IF mc(11) < 1 THEN mc(19) = mc(11) ELSE mc(19) = 1
-                        mc(11) = mc(11) - mc(19): mc(20) = mc(20) - mc(19) - 1
-                    LOOP
-                END IF
-                IF mc(pc2) < 1 THEN mc(19) = mc(pc2) ELSE mc(19) = 1
-                IF mc(pc2) = 0 THEN GOTO 444
                 IF pc2 <> pc1 THEN prob = mc(pc2) / mc(10) / (1 - mc(pc1) / mc(10) + pshc(0, 2))
                 IF pc2 = pc1 THEN prob = pshc(0, 2) / (1 - mc(pc1) / mc(10) + pshc(0, 2))
                 IF pc1 = 0 AND dsa% <> 1 THEN dadd(0) = pc1 + pc2: f(0, dadd(0)) = f(0, dadd(0)) + prob
-                mc(pc2) = mc(pc2) - mc(19): mc(10) = mc(10) - mc(19)
                 probs = probs + prob
+                IF mc(pc2) < 1 THEN mc(19) = mc(pc2) ELSE mc(19) = 1
+                IF mc(pc2) = 0 THEN GOTO 444
+                mc(pc2) = mc(pc2) - mc(19): mc(10) = mc(10) - mc(19)
                 IF pc1 <> 0 OR dsa% = 1 THEN
                     FOR g = 12 TO 19
                         FOR h = 5 TO 8
@@ -1034,11 +1024,11 @@ FOR k = 9 TO 0 STEP -1
                         NEXT y: NEXT x
                     END IF
                     GOSUB 888
-                    splithands(pc2, dc1) = splithands(pc2, dc1) * prob
                     IF das% = 1 THEN
                         IF dh% <> 1 THEN GOSUB 222
                         IF dh% = 1 THEN IF (12 > pc1 + pc2 + 2 AND pc1 + pc2 + 2 > ld% - 1) THEN GOSUB 222
                     END IF
+                    splithands(pc2, dc1) = splithands(pc2, dc1) * prob
                     ERASE df: ERASE f
                 END IF
             444 NEXT pc2: pc2 = pc3: q = 0: IF pc1 <> 0 OR dsa% = 1 THEN mc(pc2) = mc(pc2) + mc(19): mc(10) = mc(10) + mc(19)
