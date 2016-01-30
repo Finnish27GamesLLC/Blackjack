@@ -606,6 +606,7 @@ FOR v = 12 TO 19
             IF split% = 1 THEN
                 q# = f(x)
                 IF n = 9 AND bjsh% = 1 THEN q# = q# * blackjack
+                IF hole% = 1 THEN q# = q# - df(10)
                 IF pc2 < pc1 AND q# > splithands(pc2, dc1) THEN
                     IF v > pc1 + pc2 + 1 THEN splithands(pc2, dc1) = q#: far(n, dc1) = x
                     IF v = pc1 + pc2 + 1 AND v = 19 THEN splithands(pc2, dc1) = q#: far(n, dc1) = x
@@ -1179,7 +1180,7 @@ FOR k = 9 TO 0 STEP -1
              NEXT x
             ERASE splithands: ERASE splitprob: probs# = 0
             IF hole% <> 1 THEN q# = pshc(0, 1) * q# - df(10)
-            IF hole% = 1 THEN q# = pshc(0, 1) * (q# - df(10))
+            IF hole% = 1 THEN q# = pshc(0, 1) * q# 
             split = q#: aq(n, dc1, 30) = q#
             IF q# > hit(pc1 * (21 - pc1) / 2, dc1) THEN hit(pc1 * (21 - pc1) / 2, dc1) = q#: br(pc1 * (21 - pc1) / 2, dc1) = 30
             333 ERASE mc
