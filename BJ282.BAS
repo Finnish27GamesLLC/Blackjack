@@ -1175,16 +1175,6 @@ FOR k = 9 TO 0 STEP -1
                 IF mc(dc1) < 1 THEN mc(19) = mc(dc1) ELSE mc(19) = 1
                 IF mc(dc1) = 0 THEN GOTO 444 ELSE mc(dc1) = mc(dc1) - mc(19): mc(10) = mc(10) - mc(19)
                 mc0 = mc(0): mc9 = mc(9): mc10 = mc(10)
-                IF hole% <> 1 AND push% <> 1 AND dc1 = 0 THEN
-                    FOR x = 0 TO 8
-                        mc(x) = mc(x) * (mc(10) - mc(9) - 1) / (mc(10) - mc(9))
-                    NEXT x: mc(10) = mc(10) - 1
-                END IF
-                IF hole% <> 1 AND ten% <> 1 AND dc1 = 9 THEN
-                    FOR x = 1 TO 9
-                        mc(x) = mc(x) * (mc(10) - mc(0) - 1) / (mc(10) - mc(0))
-                    NEXT x: mc(10) = mc(10) - 1
-                END IF
                 IF most% = 2 THEN GOSUB 1111
                 IF most% = 3 THEN
                     IF pc1 <> 0 OR rsa% = 1 THEN
@@ -1204,9 +1194,6 @@ FOR k = 9 TO 0 STEP -1
                 END IF
                 IF pc2 <> pc1 THEN prob# = mc(pc2) / mc(10) / (1 - mc(pc1) / mc(10) + pshc(0, 2))
                 IF pc2 = pc1 THEN prob# = pshc(0, 2) / (1 - mc(pc1) / mc(10) + pshc(0, 2))
-                IF mc(pc2) < 1 THEN mc(19) = mc(pc2) ELSE mc(19) = 1
-                IF mc(pc2) = 0 THEN GOTO 444
-                mc(pc2) = mc(pc2) - mc(19): mc(10) = mc(10) - mc(19)
                 probs# = probs# + prob#: splitprob(pc2) = prob#
                 ERASE f: ERASE dbj
                 FOR g = 12 TO 19
