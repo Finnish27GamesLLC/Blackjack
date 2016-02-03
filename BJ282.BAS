@@ -1502,6 +1502,7 @@ FOR x = 0 TO 54
 NEXT y: PRINT #1, USING "##.##"; puc(x) * 100: NEXT x
 PRINT #1, " "
 PRINT #1, "total win minus loss margin is ";: PRINT #1, USING "##.###"; total# * 100;: PRINT #1, "%"
+PRINT #1, " "
 CLS: PRINT #1, "the most favorable player responses after split with pc1>=pc2": PRINT #1, " "
 b$ = "AA2A3A4A5A6A7A8A9AJA2232425262728292J233435363738393J3445464748494J45565758595J566768696J6778797J78898J899J9JJ"
 FOR x = 0 TO 10
