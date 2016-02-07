@@ -806,8 +806,6 @@ RETURN
     srndr = q#
 END IF
 RETURN
-1000
-RETURN
 1111 ERASE pshc
 REM calculates average number of post-split-hands and average number of pairs
 REM that occur after the player finishes splitting pairs in a game wherein;
@@ -822,10 +820,10 @@ pshc(1, 0) = (1 - x(0) / y(0)) * (1 - x(0) / y(1))
 pshc(1, 1) = 2 * pshc(1, 0)
 pshc(2, 0) = 2 * (1 - x(0) / y(0)) * x(0) / y(1)
 pshc(2, 1) = 2 * pshc(2, 0)
-pshc(2, 2) = pshc(2, 0) * .5
+pshc(2, 2) = pshc(2, 0) * 1
 pshc(3, 0) = x(0) / y(0) * x(1) / y(1)
 pshc(3, 1) = 2 * pshc(3, 0)
-pshc(3, 2) = pshc(3, 0)
+pshc(3, 2) = pshc(3, 0) * 2
 FOR z = 1 TO 3
     pshc(0, 1) = pshc(0, 1) + pshc(z, 1)
     pshc(0, 2) = pshc(0, 2) + pshc(z, 2)
@@ -847,13 +845,13 @@ pshc(2, 0) = 2 * (1 - x(0) / y(0)) * (1 - x(0) / y(1)) * (1 - x(0) / y(2)) * x(0
 pshc(2, 1) = 3 * pshc(2, 0)
 pshc(3, 0) = 5 * (1 - x(0) / y(0)) * (1 - x(0) / y(1)) * x(0) / y(2) * x(1) / y(3)
 pshc(3, 1) = 3 * pshc(3, 0)
-pshc(3, 2) = pshc(3, 0) / 3
+pshc(3, 2) = pshc(3, 0) * 1
 pshc(4, 0) = 4 * (1 - x(0) / y(0)) * x(0) / y(1) * x(1) / y(2) * x(2) / y(3)
 pshc(4, 1) = 3 * pshc(4, 0)
-pshc(4, 2) = 2 * pshc(4, 0) / 3
+pshc(4, 2) = pshc(4, 0) * 2
 pshc(5, 0) = x(0) / y(0) * x(1) / y(1) * x(2) / y(2) * x(3) / y(3)
 pshc(5, 1) = 3 * pshc(5, 0)
-pshc(5, 2) = pshc(5, 0)
+pshc(5, 2) = pshc(5, 0) * 3
 FOR z = 1 TO 5
     pshc(0, 1) = pshc(0, 1) + pshc(z, 1)
     pshc(0, 2) = pshc(0, 2) + pshc(z, 2)
@@ -879,23 +877,23 @@ pshc(3, 1) = 4 * pshc(3, 0)
 pshc(4, 0) = 14 * (1 - x(0) / y(0)) * (1 - x(0) / y(1)) * (1 - x(0) / y(2))
 pshc(4, 0) = pshc(4, 0) * x(0) / y(3) * x(1) / y(4) * x(2) / y(5)
 pshc(4, 1) = 4 * pshc(4, 0)
-pshc(4, 2) = pshc(4, 0) * .25
+pshc(4, 2) = pshc(4, 0) * 1
 pshc(5, 0) = 14 * (1 - x(0) / y(0)) * (1 - x(0) / y(1)) * x(0) / y(2)
 pshc(5, 0) = pshc(5, 0) * x(1) / y(3) * x(2) / y(4) * x(3) / y(5)
 pshc(5, 1) = 4 * pshc(5, 0)
-pshc(5, 2) = pshc(5, 0) * .5
+pshc(5, 2) = pshc(5, 0) * 2
 pshc(6, 0) = 6 * (1 - x(0) / y(0)) * x(0) / y(1) * x(1) / y(2) * x(2) / y(3)
-pshc(6, 0) = phsc(6, 0) * x(3) / y(4) * x(4) / y(5)
+pshc(6, 0) = pshc(6, 0) * x(3) / y(4) * x(4) / y(5)
 pshc(6, 1) = 4 * pshc(6, 0)
-pshc(6, 2) = pshc(6, 0) * .75
+pshc(6, 2) = pshc(6, 0) * 3
 pshc(7, 0) = x(0) / y(0) * x(1) / y(1) * x(2) / y(2) * x(3) / y(3) * x(4) / y(4) * x(5) / y(5)
-pshc(7, 1) = 4 * pshc(7, 1)
-pshc(7, 2) = pshc(7, 1)
+pshc(7, 1) = 4 * pshc(7, 0)
+pshc(7, 2) = pshc(7, 0) * 4
 FOR z = 1 TO 7
     pshc(0, 0) = pshc(0, 0) + pshc(z, 0)
     pshc(0, 1) = pshc(0, 1) + pshc(z, 1)
     pshc(0, 2) = pshc(0, 2) + pshc(z, 2)
-    REM PRINT pshc(0, 0); pshc(0, 1); pshc(0, 2): SLEEP 2
+    REM PRINT pshc(0, 0); pshc(0, 1); pshc(0, 2) / pshc(0, 1): SLEEP 2
 NEXT z
 RETURN
 226 CLS: PRINT "BJ282.BAS asks the user to enter the folder/filename prefix"
@@ -1192,8 +1190,11 @@ FOR k = 9 TO 0 STEP -1
                         GOSUB 1111
                     END IF
                 END IF
-                IF pc2 <> pc1 THEN prob# = mc(pc2) / mc(10) / (1 - mc(pc1) / mc(10) + pshc(0, 2))
-                IF pc2 = pc1 THEN prob# = pshc(0, 2) / (1 - mc(pc1) / mc(10) + pshc(0, 2))
+                pshc(0, 2) = pshc(0, 2) / pshc(0, 1)
+                REM IF pc2 <> pc1 THEN prob# = mc(pc2) / mc(10) / (1 - mc(pc1) / mc(10) + pshc(0, 2))
+                REM IF pc2 = pc1 THEN prob# = pshc(0, 2) / (1 - mc(pc1) / mc(10) + pshc(0, 2))
+                IF pc2 <> pc1 THEN prob# = mc(pc2) / mc(10) / (1 - ((mc(pc1) - pshc(0, 2) * mc(10)) / (mc(10) - pshc(0, 2) * mc(10))))
+                IF pc2 = pc1 THEN prob# = pshc(0, 2)
                 probs# = probs# + prob#: splitprob(pc2) = prob#
                 ERASE f: ERASE dbj
                 FOR g = 12 TO 19
