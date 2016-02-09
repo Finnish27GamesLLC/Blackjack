@@ -92,7 +92,7 @@ DIM ss(9, 7) AS INTEGER: DIM hh(9, 15) AS INTEGER: DIM hp(9, 9) AS INTEGER
 DIM prob(54, 9): DIM htotal(9, 32): DIM stotal(9, 32): DIM dd(3 TO 7) AS INTEGER
 DIM mc21po(11) AS SINGLE: DIM m(9, 33) AS INTEGER: DIM pfr(36) AS INTEGER
 DIM psr(36) AS INTEGER: DIM i(34) AS INTEGER: DIM psum(3, 36)
-DIM hf(9) AS INTEGER: DIM sf(9) AS INTEGER: DIM arc(9, 9) AS INTEGER
+DIM hf(9) AS INTEGER: DIM sf(9) AS INTEGER
 DIM rc(9) AS INTEGER: DIM sprob(9, 32): DIM hprob(9, 32): DIM pop(5) AS SINGLE
 CLS:
 PRINT "ULTIMA293.BAS prompts the user to enter the folder/filename prefix to be used"
@@ -343,7 +343,7 @@ FOR x = 0 TO 9
         FOR k = 1 TO z
         i(pfr(k)) = i(pfr(k)) + 1: NEXT k
         FOR l = 29 TO 0 STEP -1
-            IF i(l) > i(34) THEN i(34) = i(l): arc(x, y) = l: IF m = 0 THEN i(33) = l
+            IF i(l) > i(34) THEN i(34) = i(l): IF m = 0 THEN i(33) = l
         NEXT l
         IF m = 1 THEN i(33) = 30
         IF m = 2 THEN i(33) = 31
@@ -611,15 +611,15 @@ FOR pc1 = 0 TO 9
                 pe% = pc1
                 de% = dc1
                 IF hp(de%, pe%) = 1 THEN br(pn%, dn%) = 1: far(pn%, dn%) = 1: sar(pn%, dn%) = 1
-                IF hp(de%, pe%) = 2 THEN br(pn%, dn%) = arc(de%, pe%): far(pn%, dn%) = arc(de%, pe%): sar(pn%, dn%) = arc(de%, pe%)
+                IF hp(de%, pe%) = 2 THEN br(pn%, dn%) = rc(de%): far(pn%, dn%) = rc(de%): sar(pn%, dn%) = rc(de%)
                 IF hp(de%, pe%) = 3 THEN br(pn%, dn%) = 32: far(pn%, dn%) = 1: sar(pn%, dn%) = 1
-                IF hp(de%, pe%) = 4 THEN br(pn%, dn%) = 32: far(pn%, dn%) = arc(de%, pe%): sar(pn%, dn%) = arc(de%, pe%)
+                IF hp(de%, pe%) = 4 THEN br(pn%, dn%) = 32: far(pn%, dn%) = rc(de%): sar(pn%, dn%) = rc(de%)
                 IF hp(de%, pe%) = 5 THEN br(pn%, dn%) = 32: far(pn%, dn%) = 32: sar(pn%, dn%) = 32
                 IF hp(de%, pe%) = 6 THEN br(pn%, dn%) = 30: far(pn%, dn%) = 1: sar(pn%, dn%) = 1
-                IF hp(de%, pe%) = 7 THEN br(pn%, dn%) = 30: far(pn%, dn%) = arc(de%, pe%): sar(pn%, dn%) = arc(de%, pe%)
+                IF hp(de%, pe%) = 7 THEN br(pn%, dn%) = 30: far(pn%, dn%) = rc(de%): sar(pn%, dn%) = rc(de%)
                 IF hp(de%, pe%) = 8 THEN br(pn%, dn%) = 30: far(pn%, dn%) = 32: sar(pn%, dn%) = 32
                 IF hp(de%, pe%) = 9 THEN br(pn%, dn%) = 31: far(pn%, dn%) = 1: sar(pn%, dn%) = 1
-                IF hp(de%, pe%) = 10 THEN br(pn%, dn%) = 31: far(pn%, dn%) = arc(de%, pe%): sar(pn%, dn%) = arc(de%, pe%)
+                IF hp(de%, pe%) = 10 THEN br(pn%, dn%) = 31: far(pn%, dn%) = rc(de%): sar(pn%, dn%) = rc(de%)
             END IF
 NEXT dc1: NEXT pc2: NEXT pc1
 v$ = files$ + "a.dat"
