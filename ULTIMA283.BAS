@@ -1,4 +1,4 @@
-'BJ283.BAS is a software application that enables the user to 
+'ULTIMA283.BAS is a software application that enables the user to 
 'program their computer to conduct high-speed game simulations
 'of card games belonging to the Blackjack family of table-card games.
 
