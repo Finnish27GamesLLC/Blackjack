@@ -91,7 +91,7 @@ DIM far(54, 9) AS INTEGER: DIM br(54, 9) AS INTEGER: DIM dadd(14) AS INTEGER: DI
 DIM pmult(14) AS INTEGER: DIM pp(14) AS DOUBLE: DIM padd(14) AS INTEGER: DIM splitdbj(10): DIM aq(54, 9, 32)
 DIM dmult(14) AS INTEGER: DIM dp(14) AS DOUBLE: DIM duc(10): DIM f(29) AS DOUBLE: DIM card(22): DIM y(5) AS DOUBLE
 DIM mc(40) AS DOUBLE: DIM df(12) AS DOUBLE: DIM mv(5) AS INTEGER: DIM puc(54): DIM mc21po(11) AS SINGLE
-DIM pc1 AS INTEGER: DIM pc2 AS INTEGER: DIM dc1 AS INTEGER: DIM pdenom(12) AS INTEGER: DIM pshc(7, 2) AS DOUBLE
+DIM pc1 AS INTEGER: DIM pc2 AS INTEGER: DIM dc1 AS INTEGER: DIM pdenom(12) AS INTEGER: DIM pshc(7, 4) AS DOUBLE
 GOTO 226
 777 pmult(2) = pc1 * pc2: padd(2) = pc1 + pc2 + 2: pp(2) = 1: pp(0) = pp(2): padd(0) = padd(2)
 IF dc1 = 0 AND push% <> 1 THEN df(10) = mc(9) / mc(10)
@@ -806,6 +806,132 @@ RETURN
     srndr = q#
 END IF
 RETURN
+404 REM Player is allowed to split to 2 post-split hands.
+FOR x = 0 TO 0
+    x(x) = mc(pc1) - x
+NEXT x
+FOR y = 0 TO 2
+    y(y) = mc(10) - y
+NEXT y
+pshc(1, 0) = 1 - x(0) / y(0)
+pshc(1, 3) = pshc(1, 0) * 1
+pshc(1, 4) = pshc(1, 0) * 0
+pshc(2, 0) = x(0) / y(0)  
+pshc(2, 3) = pshc(2, 0) * 1
+pshc(2, 4) = pshc(2, 0) * 1
+FOR z = 1 TO 2
+    pshc(0, 3) = pshc(0, 3) + pshc(z, 3) / 2
+    pshc(0, 4) = pshc(0, 4) + pshc(z, 4) / 2
+NEXT z
+RETURN
+505 REM Player is allowed to split to 3 post-split hands. First post-split-initial hand is not a pair.
+FOR x = 0 TO 2
+    x(x) = mc(pc1) - x
+NEXT x
+FOR y = 0 TO 2
+    y(y) = mc(10) - y
+NEXT y
+pshc(1, 0) = 1 - x(0) / y(0)
+pshc(1, 3) = pshc(1, 0) * 1
+pshc(1, 4) = pshc(1, 0) * 0
+pshc(2, 0) = x(0) / y(0)  * (1 - x(1) / y(1)) * (1 - x(1) / y(2))
+pshc(2, 3) = pshc(2, 0) * 3
+pshc(2, 4) = pshc(2, 0) * 1
+pshc(3, 0) = 2 * x(0) / y(0)  * (1 - x(1) / y(1))  *  x(1) / y(2)
+pshc(3, 3) = pshc(3, 0) * 3
+pshc(3, 4) = pshc(3, 0) * 2
+pshc(4, 0) = x(0) / y(0)  * x(1) / y(1)  *  x(1) / y(2) 
+pshc(4, 3) = pshc(4, 0) * 3
+pshc(4, 4) = pshc(4, 0) * 3
+FOR z = 1 TO 4
+    pshc(0, 3) = pshc(0, 3) + pshc(z, 3) / 2
+    pshc(0, 4) = pshc(0, 4) + pshc(z, 4) / 2
+NEXT z
+RETURN
+808 REM Player is allowed to split to 3 post-split hands. First post-split-initial hand is a pair.
+FOR x = 0 TO 2
+    x(x) = mc(pc1) - x
+NEXT x
+FOR y = 0 TO 2
+    y(y) = mc(10) - y
+NEXT y
+pshc(1, 0) = (1 - x(0) / y(0)) * (1 - x(0) / y(1)) * (1 - x(0) / y(2)) 
+pshc(1, 3) = pshc(1, 0) * 3
+pshc(1, 4) = pshc(1, 0) * 0
+pshc(2, 0) = 3 * (1 - x(0) / y(0)) * (1 - x(0) / y(1)) * x(0) / y(2)
+pshc(2, 3) = pshc(2, 0) * 3
+pshc(2, 4) = pshc(2, 0) * 1
+pshc(3, 0) = 3 * (1 - x(0) / y(0)) * x(0) / y(1) *  x(1) / y(2) 
+pshc(3, 3) = pshc(3, 0) * 3
+pshc(3, 4) = pshc(3, 0) * 2
+pshc(4, 0) = x(0) / y(0) * x(1) / y(1) * x(2) / y(2)
+pshc(4, 3) = pshc(4, 0) * 3
+pshc(4, 4) = pshc(4, 0) * 3
+FOR z = 1 TO 4
+    pshc(0, 3) = pshc(0, 3) + pshc(z, 3) / 2
+    pshc(0, 4) = pshc(0, 4) + pshc(z, 4) / 2
+NEXT z
+RETURN
+1414 REM Player is allowed to split to 4 post-split hands. First post-split-initial hand is not a pair.
+FOR x = 0 TO 4
+    x(x) = mc(pc1) - x
+NEXT x
+FOR y = 0 TO 4
+    y(y) = mc(10) - y
+NEXT y
+pshc(1, 0) = 1 - x(0) / y(0)
+pshc(1, 3) = pshc(1, 0) * 1
+pshc(1, 4) = pshc(1, 0) * 0
+pshc(2, 0) = x(0) / y(0)  * (1 - x(1) / y(1)) * (1 - x(1) / y(2))
+pshc(2, 3) = pshc(2, 0) * 3
+pshc(2, 4) = pshc(2, 0) * 1
+pshc(3, 0) = 2 * x(0) / y(0)  * x(1) / y(1)  * (1 - x(2) / y(2)) * (1 - x(2) / y(3))  * (1 - x(2) / y(4)) 
+pshc(3, 3) = pshc(3, 0) * 5
+pshc(3, 4) = pshc(3, 0) * 2
+pshc(4, 0) = 5 * x(0) / y(0) *  x(1) / y(1) * x(2) / y(2) * (1 - x(3) / y(3)) * (1 - x(3) / y(4))
+pshc(4, 3) = pshc(4, 0) * 5
+pshc(4, 4) = pshc(4, 0) * 3
+pshc(5, 0) = 4 * x(0) / y(0) * x(1) / y(1) * x(2) / y(2) * x(3) / y(3) * (1 - x(4) / y(4))
+pshc(5, 3) = pshc(5, 0) * 5
+pshc(5, 4) = pshc(5, 0) * 4
+pshc(6, 0) = x(0) / y(0) * x(1) / y(1)  *  x(2) / y(2) * x(3) / y(3) * x(4) / y(4) 
+pshc(6, 3) = pshc(6, 0) * 5
+pshc(6, 4) = pshc(6, 0) * 5
+FOR z = 1 TO 6
+    pshc(0, 3) = pshc(0, 3) + pshc(z, 3) / 2
+    pshc(0, 4) = pshc(0, 4) + pshc(z, 4) / 2
+NEXT z
+RETURN
+2929 REM Player is allowed to split to 4 post-split hands. First post-split-initial hand is a pair.
+FOR x = 0 TO 4
+    x(x) = mc(pc1) - x
+NEXT x
+FOR y = 0 TO 4
+    y(y) = mc(10) - y
+NEXT y
+pshc(1, 0) = (1 - x(0) / y(0)) * (1 - x(0) / y(1)) * (1 - x(0) / y(2)) 
+pshc(1, 3) = pshc(1, 0) * 3
+pshc(1, 4) = pshc(1, 0) * 0
+pshc(2, 0) = 3 * x(0) / y(0) * (1 - x(1) / y(1)) * (1 - x(1)  / y(2)) * (1 - x(1) / y(3))  * (1 - x(1) / y(4))
+pshc(2, 3) = pshc(2, 0) * 5
+pshc(2, 4) = pshc(2, 0) * 1
+pshc(3, 0) = 9 * x(0) / y(0)  * x(1) / y(1)  * (1 - x(2) / y(2)) * (1 - x(2) / y(3))  * (1 - x(2) / y(4)) 
+pshc(3, 3) = pshc(3, 0) * 5
+pshc(3, 4) = pshc(3, 0) * 2
+pshc(4, 0) = 10 * x(0) / y(0) *  x(1) / y(1) * x(2) / y(2) * (1 - x(3) / y(3)) * (1 - x(3) / y(4))
+pshc(4, 3) = pshc(4, 0) * 5
+pshc(4, 4) = pshc(4, 0) * 3
+pshc(5, 0) = 5 * x(0) / y(0) * x(1) / y(1) * x(2) / y(2) * x(3) / y(3) * (1 - x(4) / y(4))
+pshc(5, 3) = pshc(5, 0) * 5
+pshc(5, 4) = pshc(5, 0) * 4
+pshc(6, 0) = x(0) / y(0) * x(1) / y(1)  *  x(2) / y(2) * x(3) / y(3) * x(4) / y(4) 
+pshc(6, 3) = pshc(6, 0) * 5
+pshc(6, 4) = pshc(6, 0) * 5
+FOR z = 1 TO 6
+    pshc(0, 3) = pshc(0, 3) + pshc(z, 3) / 2
+    pshc(0, 4) = pshc(0, 4) + pshc(z, 4) / 2
+NEXT z
+RETURN
 1111 ERASE pshc
 REM calculates average number of post-split-hands and average number of pairs
 REM that occur after the player finishes splitting pairs in a game wherein;
@@ -1191,11 +1317,9 @@ FOR k = 9 TO 0 STEP -1
                     END IF
                 END IF
                 pshc(0, 2) = pshc(0, 2) / pshc(0, 1)
-                REM IF pc2 <> pc1 THEN prob# = mc(pc2) / mc(10) / (1 - mc(pc1) / mc(10) + pshc(0, 2))
-                REM IF pc2 = pc1 THEN prob# = pshc(0, 2) / (1 - mc(pc1) / mc(10) + pshc(0, 2))
                 IF pc2 <> pc1 THEN prob# = mc(pc2) / mc(10) / (1 - ((mc(pc1) - pshc(0, 2) * mc(10)) / (mc(10) - pshc(0, 2) * mc(10))))
                 IF pc2 = pc1 THEN prob# = pshc(0, 2)
-                probs# = probs# + prob#: splitprob(pc2) = prob#
+                probs# = probs# + prob#: splitprob(pc2) = prob#               
                 ERASE f: ERASE dbj
                 FOR g = 12 TO 19
                     FOR h = 5 TO 8
@@ -1216,6 +1340,45 @@ FOR k = 9 TO 0 STEP -1
                             IF mc(pc2) < 1 THEN mc(19) = mc(pc2) ELSE mc(19) = 1
                             IF mc(pc2) = 0 THEN GOTO 444 ELSE mc(pc2) = mc(pc2) - mc(19): mc(10) = mc(10) - mc(19)
                             mc0 = mc(0): mc9 = mc(9): mc10 = mc(10): IF pc1 = 0 AND dsa% <> 1 THEN nodsa% = 1
+                            IF most% = 2 THEN
+                                GOSUB 404
+                            END IF
+                            IF most% = 3 THEN
+                                IF pc1 <> 0 OR rsa% = 1 THEN
+                                    IF pc1 <> pc2 THEN 
+                                        GOSUB 505
+                                    END IF
+                                    IF pc1 = pc2 THEN
+                                        GOSUB 808
+                                    END IF
+                                END IF
+                                IF pc1 = 0 AND rsa% <> 1 THEN
+                                    GOSUB 404
+                                END IF
+                            END IF
+                            IF most% > 3 THEN
+                                IF pc1 <> 0 OR rsa% = 1 THEN
+                                    IF pc1 <> pc2 THEN
+                                        GOSUB 1414
+                                    END IF
+                                    IF pc1 = pc2 THEN
+                                        GOSUB 2929
+                                    END IF
+                                END IF
+                                IF pc1 = 0 AND rsa% <> 1 THEN
+                                    GOSUB 404
+                                END IF
+                            END IF
+                            FOR x = 0 TO 9
+                                IF pc1 = x THEN
+                                    IF mc(x) < pshc(0, 4) THEN mc(19) = mc(x) ELSE mc(19) = pshc(0, 4)
+                                    IF mc(x) = 0 THEN GOTO 444 ELSE mc(x) = mc(x) - mc(19): mc(10) = mc(10) - mc(19)
+                                END IF
+                                IF pc1 <> x THEN
+                                    IF mc(x) < (pshc(0, 3) - pshc(0, 4)) * mc(x) / mc(10) THEN mc(19) = mc(x) ELSE mc(19) = (pshc(0, 3) - pshc(0, 4)) * mc(x) / mc(10)
+                                    IF mc(x) = 0 THEN GOTO 444 ELSE mc(x) = mc(x) - mc(19): mc(10) = mc(10) - mc(19)
+                                END IF
+                            NEXT x
                             GOSUB 777
                             nodsa% = 0
                             IF pc1 * pc2 = 0 THEN
