@@ -820,8 +820,8 @@ pshc(2, 0) = x(0) / y(0)
 pshc(2, 3) = pshc(2, 0) * 1
 pshc(2, 4) = pshc(2, 0) * 1
 FOR z = 1 TO 2
-    pshc(0, 3) = pshc(0, 3) + pshc(z, 3) / 2
-    pshc(0, 4) = pshc(0, 4) + pshc(z, 4) / 2
+    pshc(0, 3) = pshc(0, 3) + pshc(z, 3)
+    pshc(0, 4) = pshc(0, 4) + pshc(z, 4)
 NEXT z
 RETURN
 505 REM Player is allowed to split to 3 post-split hands. First post-split-initial hand is not a pair.
@@ -844,8 +844,8 @@ pshc(4, 0) = x(0) / y(0)  * x(1) / y(1)  *  x(1) / y(2)
 pshc(4, 3) = pshc(4, 0) * 3
 pshc(4, 4) = pshc(4, 0) * 3
 FOR z = 1 TO 4
-    pshc(0, 3) = pshc(0, 3) + pshc(z, 3) / 2
-    pshc(0, 4) = pshc(0, 4) + pshc(z, 4) / 2
+    pshc(0, 3) = pshc(0, 3) + pshc(z, 3)
+    pshc(0, 4) = pshc(0, 4) + pshc(z, 4)
 NEXT z
 RETURN
 808 REM Player is allowed to split to 3 post-split hands. First post-split-initial hand is a pair.
@@ -868,8 +868,8 @@ pshc(4, 0) = x(0) / y(0) * x(1) / y(1) * x(2) / y(2)
 pshc(4, 3) = pshc(4, 0) * 3
 pshc(4, 4) = pshc(4, 0) * 3
 FOR z = 1 TO 4
-    pshc(0, 3) = pshc(0, 3) + pshc(z, 3) / 2
-    pshc(0, 4) = pshc(0, 4) + pshc(z, 4) / 2
+    pshc(0, 3) = pshc(0, 3) + pshc(z, 3)
+    pshc(0, 4) = pshc(0, 4) + pshc(z, 4)
 NEXT z
 RETURN
 1414 REM Player is allowed to split to 4 post-split hands. First post-split-initial hand is not a pair.
