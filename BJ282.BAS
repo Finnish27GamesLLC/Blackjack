@@ -898,9 +898,10 @@ pshc(6, 0) = x(0) / y(0) * x(1) / y(1)  *  x(2) / y(2) * x(3) / y(3) * x(4) / y(
 pshc(6, 3) = pshc(6, 0) * 5
 pshc(6, 4) = pshc(6, 0) * 5
 FOR z = 1 TO 6
-    pshc(0, 3) = pshc(0, 3) + pshc(z, 3) / 2
-    pshc(0, 4) = pshc(0, 4) + pshc(z, 4) / 2
+    pshc(0, 3) = pshc(0, 3) + pshc(z, 3)
+    pshc(0, 4) = pshc(0, 4) + pshc(z, 4)
 NEXT z
+REM PRINT pshc(0, 3); pshc(0, 4): SLEEP 2
 RETURN
 2929 REM Player is allowed to split to 4 post-split hands. First post-split-initial hand is a pair.
 FOR x = 0 TO 4
@@ -928,9 +929,10 @@ pshc(6, 0) = x(0) / y(0) * x(1) / y(1)  *  x(2) / y(2) * x(3) / y(3) * x(4) / y(
 pshc(6, 3) = pshc(6, 0) * 5
 pshc(6, 4) = pshc(6, 0) * 5
 FOR z = 1 TO 6
-    pshc(0, 3) = pshc(0, 3) + pshc(z, 3) / 2
-    pshc(0, 4) = pshc(0, 4) + pshc(z, 4) / 2
+    pshc(0, 3) = pshc(0, 3) + pshc(z, 3)
+    pshc(0, 4) = pshc(0, 4) + pshc(z, 4)
 NEXT z
+REM PRINT pshc(0, 3); pshc(0, 4): SLEEP 2
 RETURN
 1111 ERASE pshc
 REM calculates average number of post-split-hands and average number of pairs
@@ -1319,66 +1321,56 @@ FOR k = 9 TO 0 STEP -1
                 pshc(0, 2) = pshc(0, 2) / pshc(0, 1)
                 IF pc2 <> pc1 THEN prob# = mc(pc2) / mc(10) / (1 - ((mc(pc1) - pshc(0, 2) * mc(10)) / (mc(10) - pshc(0, 2) * mc(10))))
                 IF pc2 = pc1 THEN prob# = pshc(0, 2)
-                probs# = probs# + prob#: splitprob(pc2) = prob#               
+                probs# = probs# + prob#: splitprob(pc2) = prob#
+                IF mc(pc2) < 1 THEN mc(19) = mc(pc2) ELSE mc(19) = 1
+                IF mc(pc2) = 0 THEN GOTO 444 ELSE mc(pc2) = mc(pc2) - mc(19): mc(10) = mc(10) - mc(19)
+                mc0 = mc(0): mc9 = mc(9): mc10 = mc(10): IF pc1 = 0 AND dsa% <> 1 THEN nodsa% = 1
+                IF most% = 2 THEN
+                    GOSUB 404
+                END IF
+                IF most% = 3 THEN
+                    IF pc1 <> 0 OR rsa% = 1 THEN
+                        IF pc1 <> pc2 THEN 
+                            GOSUB 505
+                        END IF
+                        IF pc1 = pc2 THEN
+                            GOSUB 808
+                        END IF
+                    END IF
+                    IF pc1 = 0 AND rsa% <> 1 THEN
+                        GOSUB 404
+                    END IF
+                END IF
+                IF most% > 3 THEN
+                    IF pc1 <> 0 OR rsa% = 1 THEN
+                        IF pc1 <> pc2 THEN
+                            GOSUB 1414
+                        END IF
+                        IF pc1 = pc2 THEN
+                            GOSUB 2929
+                        END IF
+                    END IF
+                    IF pc1 = 0 AND rsa% <> 1 THEN
+                        GOSUB 404
+                    END IF
+                END IF
+                FOR x = 0 TO 9
+                    IF pc1 = x THEN
+                        IF mc(x) < pshc(0, 4) THEN mc(19) = mc(x) ELSE mc(19) = pshc(0, 4)
+                        IF mc(x) = 0 THEN GOTO 444 ELSE mc(x) = mc(x) - mc(19): mc(10) = mc(10) - mc(19)
+                    END IF
+                    IF pc1 <> x THEN
+                        IF mc(x) < (pshc(0, 3) - pshc(0, 4)) * mc(x) / mc(10) THEN mc(19) = mc(x) ELSE mc(19) = (pshc(0, 3) - pshc(0, 4)) * mc(x) / mc(10)
+                        IF mc(x) = 0 THEN GOTO 444 ELSE mc(x) = mc(x) - mc(19): mc(10) = mc(10) - mc(19)
+                    END IF
+                NEXT x
                 ERASE f: ERASE dbj
                 FOR g = 12 TO 19
                     FOR h = 5 TO 8
                         IF h + 12 < g THEN h = g - 12
                         I = I + 1
                         IF g >= hl% AND g <= hu% AND h + 12 >= sl% AND h + 12 <= su% THEN
-                            ERASE mc
-                            FOR x = 0 TO 12
-                                IF x > 8 THEN mc(9) = mc(9) + card(x) * deck% ELSE mc(x) = card(x) * deck%
-                            NEXT x
-                            mc(10) = card(13) * deck%
-                            IF mc(pc1) < 1 THEN mc(19) = mc(pc1) ELSE mc(19) = 1
-                            IF mc(pc1) = 0 THEN GOTO 444 ELSE mc(pc1) = mc(pc1) - mc(19): mc(10) = mc(10) - mc(19)
-                            IF mc(pc1) < 1 THEN mc(19) = mc(pc1) ELSE mc(19) = 1
-                            IF mc(pc1) = 0 THEN GOTO 444 ELSE mc(pc1) = mc(pc1) - mc(19): mc(10) = mc(10) - mc(19)
-                            IF mc(dc1) < 1 THEN mc(19) = mc(dc1) ELSE mc(19) = 1
-                            IF mc(dc1) = 0 THEN GOTO 444 ELSE mc(dc1) = mc(dc1) - mc(19): mc(10) = mc(10) - mc(19)
-                            IF mc(pc2) < 1 THEN mc(19) = mc(pc2) ELSE mc(19) = 1
-                            IF mc(pc2) = 0 THEN GOTO 444 ELSE mc(pc2) = mc(pc2) - mc(19): mc(10) = mc(10) - mc(19)
-                            mc0 = mc(0): mc9 = mc(9): mc10 = mc(10): IF pc1 = 0 AND dsa% <> 1 THEN nodsa% = 1
-                            IF most% = 2 THEN
-                                GOSUB 404
-                            END IF
-                            IF most% = 3 THEN
-                                IF pc1 <> 0 OR rsa% = 1 THEN
-                                    IF pc1 <> pc2 THEN 
-                                        GOSUB 505
-                                    END IF
-                                    IF pc1 = pc2 THEN
-                                        GOSUB 808
-                                    END IF
-                                END IF
-                                IF pc1 = 0 AND rsa% <> 1 THEN
-                                    GOSUB 404
-                                END IF
-                            END IF
-                            IF most% > 3 THEN
-                                IF pc1 <> 0 OR rsa% = 1 THEN
-                                    IF pc1 <> pc2 THEN
-                                        GOSUB 1414
-                                    END IF
-                                    IF pc1 = pc2 THEN
-                                        GOSUB 2929
-                                    END IF
-                                END IF
-                                IF pc1 = 0 AND rsa% <> 1 THEN
-                                    GOSUB 404
-                                END IF
-                            END IF
-                            FOR x = 0 TO 9
-                                IF pc1 = x THEN
-                                    IF mc(x) < pshc(0, 4) THEN mc(19) = mc(x) ELSE mc(19) = pshc(0, 4)
-                                    IF mc(x) = 0 THEN GOTO 444 ELSE mc(x) = mc(x) - mc(19): mc(10) = mc(10) - mc(19)
-                                END IF
-                                IF pc1 <> x THEN
-                                    IF mc(x) < (pshc(0, 3) - pshc(0, 4)) * mc(x) / mc(10) THEN mc(19) = mc(x) ELSE mc(19) = (pshc(0, 3) - pshc(0, 4)) * mc(x) / mc(10)
-                                    IF mc(x) = 0 THEN GOTO 444 ELSE mc(x) = mc(x) - mc(19): mc(10) = mc(10) - mc(19)
-                                END IF
-                            NEXT x
+                            IF dsa% <> 1 AND pc1 = 0 THEN nodsa% = 1
                             GOSUB 777
                             nodsa% = 0
                             IF pc1 * pc2 = 0 THEN
