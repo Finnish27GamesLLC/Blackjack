@@ -1418,7 +1418,7 @@ FOR k = 9 TO 0 STEP -1
             'END IF
             ERASE splithands: ERASE splitdbj: ERASE splitprob: probs# = 0
             IF hole% <> 1 THEN q# = pshc(0, 1) * q# + qdbj#
-            IF hole% = 1 THEN q# = pshc(0, 1) * (q# + qdbj#)
+            IF hole% = 1 THEN q# = pshc(0, 1) * q#
             split = q#: aq(n, dc1, 30) = q#
             IF q# > hit(pc1 * (21 - pc1) / 2, dc1) THEN hit(pc1 * (21 - pc1) / 2, dc1) = q#: br(pc1 * (21 - pc1) / 2, dc1) = 30
             333 ERASE mc
