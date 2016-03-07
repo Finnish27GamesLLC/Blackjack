@@ -124,6 +124,15 @@ GOTO 543
 987 c1% = FIX(RND * card(13))
 c% = stack(c1%): card(13) = card(13) - 1: card(denom(c%)) = card(denom(c%)) - 1: stack(c1%) = stack(card(13)): stack(card(13)) = c%
 RETURN
+
+REM use subroutine 900 to preset the numerical values of cards.
+900 c1% = FIX(RND * card(13))
+DO WHILE av(stack(c1%)) <> tv%
+    c1% = FIX(RND * card(13))
+LOOP
+c% = stack(c1%): card(13) = card(13) - 1: card(denom(c%)) = card(denom(c%)) - 1: stack(c1%) = stack(card(13)): stack(card(13)) = c%
+RETURN
+
 707 FOR x = 0 TO 13
 card(x) = deck% * mc(x): NEXT x
 323 cv(13) = 0: ev(13) = 0: gv(14) = 0
@@ -173,8 +182,14 @@ IF bet& > maxi& THEN bet& = maxi&
 b(21) = bet&
 b(28) = b(28) + card(13): b(38) = b(38) + 1
 FOR x = 1 TO 2
+    REM IF x = 1 THEN tv% = 0
+    REM IF x = 2 THEN tv% = 0
     FOR y = 0 TO ap%
-GOSUB 987: ap(y, x) = c%: NEXT y: NEXT x
+        GOSUB 987
+        ap(y, x) = c%
+    NEXT y
+NEXT x
+REM v% = 9
 GOSUB 987: dcd(1) = denom(c%): dc(1) = av(c%): dcs(1) = suit(c%): dc(0) = 1
 GOSUB 987: dcd(2) = denom(c%): dc(2) = av(c%): dcs(2) = suit(c%): dc(0) = 2
 IF bet& = 0 THEN GOTO 323
@@ -343,8 +358,12 @@ IF n = 9 AND phc(0, 0) = 1 AND dn <> 9 THEN
 END IF
 85 FOR x = 1 TO phc(0, 0)
     IF phc(x, 1) < phc(x, 2) THEN n = phc(x, 1) / 2 * (19 - phc(x, 1)) + phc(x, 2) ELSE n = phc(x, 2) / 2 * (19 - phc(x, 2)) + phc(x, 1)
-    IF push% <> 1 AND (dc(1) = 0 AND dc(2) = 9) AND n <> 9 THEN b(25) = b(25) + v(x) * bet&: b(27) = b(27) + v(x): GOTO 81
-    IF ten% <> 1 AND (dc(1) = 9 AND dc(2) = 0) AND n <> 9 THEN b(25) = b(25) + v(x) * bet&: b(27) = b(27) + v(x): GOTO 81
+    IF push% <> 1 AND (dc(1) = 0 AND dc(2) = 9) THEN
+        IF hole% = 1 OR n <> 9 THEN b(25) = b(25) + v(x) * bet&: b(27) = b(27) + v(x): GOTO 81
+    END IF
+    IF ten% <> 1 AND (dc(1) = 9 AND dc(2) = 0) THEN 
+        IF hole% = 1 OR n <> 9 THEN b(25) = b(25) + v(x) * bet&: b(27) = b(27) + v(x): GOTO 81
+    END IF
     IF early% <> 1 THEN IF surrender% = 1 THEN b(25) = b(25) + bet&: b(27) = b(27) + 1: b(0) = b(0) + 1: GOTO 9
     IF bjsh% = 1 AND n = 9 THEN
         v(x) = blackjack * 2: b(23) = b(23) + v(x) * bet&: b(26) = b(26) + v(x)
@@ -1028,8 +1047,8 @@ PRINT #1, "press 1 and enter for true count conversion ";: PRINT #1, true%
 PRINT #1, "input a constant added to render the bet count ";: PRINT #1, constant
 PRINT #1, "press 1 and enter to use ongoing simulation results "
 PRINT #1, "to converge upon an optimal-card-counting strategy (ezcount)";: PRINT #1, ezc%
-PRINT #1, "Press 1 and enter to mathematically balance"
-PRINT #1, "card-counting strategy if unbalanced ";: PRINT #1, bal%
+PRINT #1, "Press 1 and enter to mathematically balance "
+PRINT #1, "the card-counting strategy if unbalanced ";: PRINT #1, bal%
 IF bal% = 1 THEN
     PRINT #1, "Press 1 and enter, or 2 and enter to specify the type of balancing to be used: "
     PRINT #1, "1 for subtractive, 2 for multiplicative ": PRINT #1, balance%
@@ -1280,7 +1299,7 @@ PRINT #1, "finish purse ";: PRINT #1, USING "########.#"; purse + (b(39) - b(40)
 PRINT #1, " low ";: PRINT #1, USING "########.#"; b(43);: PRINT #1, "  largest drop ";: PRINT #1, USING "########.#"; drop
 PRINT #1, "change in purse is an average of ";: PRINT #1, USING "##########.##"; b(31);: PRINT #1, " credits after "; scr&; " rounds"
 PRINT #1, "one standard deviation equal to  ";: PRINT #1, USING "##########.##"; SQR(b(33) / INT(rn&& / scr&));: PRINT #1, " credits"
-PRINT #1, " "
+PRINT #1, ""
 IF ezc% <> 1 THEN
     PRINT #1, "values added to the running count as each ";
     PRINT #1, "card of a given denomination was played"
