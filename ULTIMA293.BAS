@@ -214,13 +214,6 @@ FOR k = 0 TO 9
             IF mc(dc1) < 1 THEN mc(11) = mc(dc1) ELSE mc(11) = 1
             IF mc(dc1) = 0 THEN GOTO 567 ELSE prob(n, dc1) = prob(n, dc1) * mc(dc1) / mc(10): mc(dc1) = mc(dc1) - mc(11): mc(10) = mc(10) - mc(11)
             probs# = probs# + prob(n, dc1)
-            IF br(n, m) < 30 THEN
-                IF k * l <> 0 THEN IF g(br(n, m)) > k + l + 2 THEN pop(2) = pop(2) + prob(n, dc1) ELSE pop(1) = pop(1) + prob(n, dc1)
-                IF k * l = 0 THEN IF h(br(n, m)) > k + l + 12 THEN pop(2) = pop(2) + prob(n, dc1) ELSE pop(1) = pop(1) + prob(n, dc1)
-            END IF
-            IF br(n, m) = 32 THEN pop(3) = pop(3) + prob(n, dc1)
-            IF br(n, m) = 30 THEN pop(4) = pop(4) + prob(n, dc1)
-            IF br(n, m) = 31 THEN pop(5) = pop(5) + prob(n, dc1)
 567 NEXT m: NEXT l: NEXT k
 IF skip% = 1 THEN
     FOR x = 0 TO 9
@@ -553,21 +546,6 @@ FOR x = 0 TO 10
     IF x = 0 THEN PRINT #1, "     ";
     IF x > 0 THEN PRINT #1, MID$(dh$, x * 2 - 1, 2);: PRINT #1, " ";
 NEXT x
-PRINT #1, " "
-PRINT #1, " "
-PRINT #1, t$
-PRINT #1, " "
-PRINT #1, "Key: S = Stand, H = Hit"
-PRINT #1, "     D = Double, Ds = Double else Stand, Dh = Double else Hit"
-PRINT #1, "     PS = Split else Stand, PH = Split else Hit, PD = Split else Double, "
-PRINT #1, "     R* = Surrender else Stand, R = Surrender else Hit"
-PRINT #1, " "
-PRINT #1, "Breakdown ": PRINT #1, " "
-PRINT #1, "Stand       ";: PRINT #1, USING "###.###"; pop(1) * 100;: PRINT #1, " % of the time."
-PRINT #1, "Hit         ";: PRINT #1, USING "###.###"; pop(2) * 100;: PRINT #1, " % of the time."
-PRINT #1, "Double Down ";: PRINT #1, USING "###.###"; pop(3) * 100;: PRINT #1, " % of the time."
-PRINT #1, "Split       ";: PRINT #1, USING "###.###"; pop(4) * 100;: PRINT #1, " % of the time."
-PRINT #1, "Surrender   ";: PRINT #1, USING "###.###"; pop(5) * 100;: PRINT #1, " % of the time."
 CLOSE #1
 ERASE br: ERASE far: ERASE sar
 800 REM put a human friendly basic strategy into a computer friendly advanced combination dependent strategy format
@@ -622,6 +600,36 @@ FOR pc1 = 0 TO 9
                 IF hp(de%, pe%) = 10 THEN br(pn%, dn%) = 31: far(pn%, dn%) = rc(de%): sar(pn%, dn%) = rc(de%)
             END IF
 NEXT dc1: NEXT pc2: NEXT pc1
+FOR k = 0 TO 9
+    FOR l = k TO 9
+        n = k / 2 * (19 - k) + l
+        FOR m = 0 TO 9
+            pc1 = k: pc2 = l: dc1 = m
+            IF br(n, m) < 30 THEN
+                IF k * l <> 0 THEN IF g(br(n, m)) > k + l + 2 THEN pop(2) = pop(2) + prob(n, dc1) ELSE pop(1) = pop(1) + prob(n, dc1)
+                IF k * l = 0 THEN IF h(br(n, m)) > k + l + 12 THEN pop(2) = pop(2) + prob(n, dc1) ELSE pop(1) = pop(1) + prob(n, dc1)
+            END IF
+            IF br(n, m) = 32 THEN pop(3) = pop(3) + prob(n, dc1)
+            IF br(n, m) = 30 THEN pop(4) = pop(4) + prob(n, dc1)
+            IF br(n, m) = 31 THEN pop(5) = pop(5) + prob(n, dc1)
+NEXT m: NEXT l: NEXT k
+OPEN v$ FOR APPEND AS #1
+PRINT #1, " "
+PRINT #1, " "
+PRINT #1, t$
+PRINT #1, " "
+PRINT #1, "Key: S = Stand, H = Hit"
+PRINT #1, "     D = Double, Ds = Double else Stand, Dh = Double else Hit"
+PRINT #1, "     PS = Split else Stand, PH = Split else Hit, PD = Split else Double, "
+PRINT #1, "     R* = Surrender else Stand, R = Surrender else Hit"
+PRINT #1, " "
+PRINT #1, "Breakdown ": PRINT #1, " "
+PRINT #1, "Stand       ";: PRINT #1, USING "###.###"; pop(1) * 100;: PRINT #1, " % of the time."
+PRINT #1, "Hit         ";: PRINT #1, USING "###.###"; pop(2) * 100;: PRINT #1, " % of the time."
+PRINT #1, "Double Down ";: PRINT #1, USING "###.###"; pop(3) * 100;: PRINT #1, " % of the time."
+PRINT #1, "Split       ";: PRINT #1, USING "###.###"; pop(4) * 100;: PRINT #1, " % of the time."
+PRINT #1, "Surrender   ";: PRINT #1, USING "###.###"; pop(5) * 100;: PRINT #1, " % of the time."
+CLOSE #1
 v$ = files$ + "a.dat"
 OPEN v$ FOR RANDOM AS #1 LEN = LEN(sd)
 sd.c1 = bc(0): sd.c2 = bc(1): sd.c3 = bc(2): sd.c4 = bc(3): sd.c5 = bc(4)
