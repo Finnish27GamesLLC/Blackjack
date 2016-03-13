@@ -189,7 +189,7 @@ FOR x = 1 TO 2
         ap(y, x) = c%
     NEXT y
 NEXT x
-REM v% = 9
+REM tv% = 9
 GOSUB 987: dcd(1) = denom(c%): dc(1) = av(c%): dcs(1) = suit(c%): dc(0) = 1
 GOSUB 987: dcd(2) = denom(c%): dc(2) = av(c%): dcs(2) = suit(c%): dc(0) = 2
 IF bet& = 0 THEN GOTO 323
