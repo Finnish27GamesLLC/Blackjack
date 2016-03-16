@@ -253,7 +253,7 @@ IF skip% <> 1 THEN
                 n = pc1 / 2 * (19 - pc1) + pc2
                 IF br(n, dc1) < 30 AND pc1 <> pc2 THEN
                     FOR op = 1 TO 29
-                        IF pc1 + pc2 + 2 < g(br(n, dc1)) AND g(br(n, dc1)) < 30 THEN
+                        IF pc1 + pc2 + 2 <= g(br(n, dc1)) AND g(br(n, dc1)) < 30 THEN
                             htotal(dc1, op) = htotal(dc1, op) + aq(n, dc1, op) * prob(n, dc1): hprob(dc1, op) = hprob(dc1, op) + prob(n, dc1)
                         END IF
                     NEXT op
@@ -267,7 +267,7 @@ IF skip% <> 1 THEN
                     IF aq(n, dc1, op) > q THEN q = aq(n, dc1, op): hr(n, dc1) = op
                 NEXT op
                 IF br(n, dc1) < 30 AND pc1 <> pc2 THEN
-                    IF pc1 + pc2 + 12 < h(br(n, dc1)) THEN
+                    IF pc1 + pc2 + 12 <= h(br(n, dc1)) THEN
                         IF h(br(n, dc1)) < 30 THEN
                             FOR op = 1 TO 29
                                 IF pc1 = 0 THEN
