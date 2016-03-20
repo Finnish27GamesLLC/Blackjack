@@ -1325,45 +1325,47 @@ FOR k = 9 TO 0 STEP -1
                 IF mc(pc2) < 1 THEN mc(19) = mc(pc2) ELSE mc(19) = 1
                 IF mc(pc2) = 0 THEN GOTO 444 ELSE mc(pc2) = mc(pc2) - mc(19): mc(10) = mc(10) - mc(19)
                 mc0 = mc(0): mc9 = mc(9): mc10 = mc(10): IF pc1 = 0 AND dsa% <> 1 THEN nodsa% = 1
-                IF most% = 2 THEN
-                    GOSUB 404
-                END IF
-                IF most% = 3 THEN
-                    IF pc1 <> 0 OR rsa% = 1 THEN
-                        IF pc1 <> pc2 THEN 
-                            GOSUB 505
-                        END IF
-                        IF pc1 = pc2 THEN
-                            GOSUB 808
-                        END IF
-                    END IF
-                    IF pc1 = 0 AND rsa% <> 1 THEN
+                IF deck% > 1 THEN
+                    IF most% = 2 THEN
                         GOSUB 404
                     END IF
-                END IF
-                IF most% > 3 THEN
-                    IF pc1 <> 0 OR rsa% = 1 THEN
-                        IF pc1 <> pc2 THEN
-                            GOSUB 1414
+                    IF most% = 3 THEN
+                        IF pc1 <> 0 OR rsa% = 1 THEN
+                            IF pc1 <> pc2 THEN 
+                                GOSUB 505
+                            END IF
+                            IF pc1 = pc2 THEN
+                                GOSUB 808
+                            END IF
                         END IF
-                        IF pc1 = pc2 THEN
-                            GOSUB 2929
+                        IF pc1 = 0 AND rsa% <> 1 THEN
+                            GOSUB 404
                         END IF
                     END IF
-                    IF pc1 = 0 AND rsa% <> 1 THEN
-                        GOSUB 404
+                    IF most% > 3 THEN
+                        IF pc1 <> 0 OR rsa% = 1 THEN
+                            IF pc1 <> pc2 THEN
+                                GOSUB 1414
+                            END IF
+                            IF pc1 = pc2 THEN
+                                GOSUB 2929
+                            END IF
+                        END IF
+                        IF pc1 = 0 AND rsa% <> 1 THEN
+                            GOSUB 404
+                        END IF
                     END IF
+                    FOR x = 0 TO 9
+                        IF pc1 = x THEN
+                            IF mc(x) < pshc(0, 4) THEN mc(19) = mc(x) ELSE mc(19) = pshc(0, 4)
+                            IF mc(x) = 0 THEN GOTO 444 ELSE mc(x) = mc(x) - mc(19): mc(10) = mc(10) - mc(19)
+                        END IF
+                        IF pc1 <> x THEN
+                            IF mc(x) < (pshc(0, 3) - pshc(0, 4)) * mc(x) / mc(10) THEN mc(19) = mc(x) ELSE mc(19) = (pshc(0, 3) - pshc(0, 4)) * mc(x) / mc(10)
+                            IF mc(x) = 0 THEN GOTO 444 ELSE mc(x) = mc(x) - mc(19): mc(10) = mc(10) - mc(19)
+                        END IF
+                    NEXT x
                 END IF
-                FOR x = 0 TO 9
-                    IF pc1 = x THEN
-                        IF mc(x) < pshc(0, 4) THEN mc(19) = mc(x) ELSE mc(19) = pshc(0, 4)
-                        IF mc(x) = 0 THEN GOTO 444 ELSE mc(x) = mc(x) - mc(19): mc(10) = mc(10) - mc(19)
-                    END IF
-                    IF pc1 <> x THEN
-                        IF mc(x) < (pshc(0, 3) - pshc(0, 4)) * mc(x) / mc(10) THEN mc(19) = mc(x) ELSE mc(19) = (pshc(0, 3) - pshc(0, 4)) * mc(x) / mc(10)
-                        IF mc(x) = 0 THEN GOTO 444 ELSE mc(x) = mc(x) - mc(19): mc(10) = mc(10) - mc(19)
-                    END IF
-                NEXT x
                 ERASE f: ERASE dbj
                 FOR g = 12 TO 19
                     FOR h = 5 TO 8
