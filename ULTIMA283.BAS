@@ -1145,7 +1145,7 @@ IF b21po% = 1 THEN
         INPUT ptbm%: ptm(3) = ptbm%
     END IF
 END IF
-PRINT "what is the number of additional players at the table (0-6) ";: INPUT ap
+PRINT "what is the number of additional players at the table (0-6) ";: INPUT ap%
 PRINT "input the number of sessions in this simulation (1 - 10000) ";: INPUT hmr&
 PRINT "input the number of rounds of play in each session (1 -"; FIX(2100000000 / hmr&); ") ";: INPUT scr&
 hmr& = hmr& * scr&
@@ -1227,7 +1227,7 @@ IF b21po% = 1 THEN
         PRINT #1, ptm(3)
     END IF
 END IF
-PRINT #1, "input the number of additional players at the table (0-6)";: PRINT #1, ap
+PRINT #1, "input the number of additional players at the table (0-6)";: PRINT #1, ap%
 PRINT #1, "input the number of sessions in this simulation ";: PRINT #1, hmr& / scr&
 PRINT #1, "input the number of rounds of play in each session ";: PRINT #1, scr&
 PRINT #1, ""
