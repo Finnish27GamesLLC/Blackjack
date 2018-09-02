@@ -678,7 +678,7 @@ IF ezc% = 1 AND bal% = 1 THEN
         NEXT x
     END IF
 END IF
-standin = cv(13): IF true% = 1 THEN standin = standin / CINT(card(13) / bc(13)): IF standin > 0 THEN standin = FIX(standin)
+standin = cv(13): IF true% = 1 THEN standin = standin / (card(13) / bc(13))
 b(7) = standin + constant
 IF truequit% <> 1 THEN IF quit > b(7) THEN b(14) = b(14) + 1: GOTO 707
 IF truequit% = 1 THEN IF quit * card(13) / (bc(13) * deck%) > b(7) THEN b(14) = b(14) + 1: GOTO 707
